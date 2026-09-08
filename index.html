@@ -4,98 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tesla Investment Platform</title>
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    :root {
-      --bg-main: #050b14;
-      --bg-card: #0b1523;
-      --bg-sidebar: #03070d;
-      --accent-red: #e51937;
-      --accent-green: #10b981;
-      --accent-blue: #3b82f6;
-      --text-main: #ffffff;
-      --text-muted: #8a99ad;
-      --border-color: #162436;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg-main); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; }
-
-    /* Sidebar Navigation */
-    .sidebar { width: 260px; background: var(--bg-sidebar); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; position: fixed; height: 100vh; padding: 24px 16px; z-index: 10; }
-    .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-    .brand-logo { font-size: 20px; font-weight: 900; letter-spacing: 4px; color: var(--text-main); }
-    .brand-subtitle { font-size: 9px; color: var(--text-muted); letter-spacing: 1.5px; }
-
-    .nav-list { list-style: none; }
-    .nav-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: var(--text-muted); text-decoration: none; border-radius: 8px; font-size: 14px; font-weight: 500; margin-bottom: 4px; transition: 0.2s; cursor: pointer; }
-    .nav-item.active, .nav-item:hover { background: #111e30; color: #fff; }
-    .nav-item.active { border-left: 3px solid var(--accent-red); }
-
-    .sidebar-promo { background: linear-gradient(180deg, rgba(11,21,35,0) 0%, rgba(11,21,35,0.9) 100%), url('https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=400&q=80') center/cover; border-radius: 12px; padding: 16px; border: 1px solid var(--border-color); text-align: center; margin-top: auto; }
-    .sidebar-promo h4 { font-size: 13px; margin-bottom: 6px; }
-    .sidebar-promo p { font-size: 11px; color: var(--text-muted); }
-
-    /* Layout Main */
-    .layout-wrapper { margin-left: 260px; display: grid; grid-template-columns: 1fr 340px; width: calc(100% - 260px); }
-    .main-content { padding: 24px 32px; border-right: 1px solid var(--border-color); }
-    .right-sidebar { padding: 24px; background: var(--bg-main); }
-
-    /* Top Bar */
-    .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-    .platform-title { font-size: 11px; letter-spacing: 2px; color: var(--text-muted); text-transform: uppercase; }
-    .user-badge { display: flex; align-items: center; gap: 10px; background: var(--bg-card); padding: 6px 12px; border-radius: 20px; border: 1px solid var(--border-color); font-size: 12px; }
-
-    /* Hero Banner */
-    .hero-banner { background: linear-gradient(90deg, rgba(5,11,20,0.9) 30%, rgba(5,11,20,0.2) 100%), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80') center/cover; border-radius: 16px; padding: 32px; border: 1px solid var(--border-color); margin-bottom: 24px; }
-    .hero-banner h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; max-width: 450px; }
-    .hero-banner p { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; max-width: 400px; }
-    .btn-primary { background: var(--accent-red); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 13px; transition: 0.2s; }
-    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
-
-    /* Metrics Grid */
-    .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
-    .metric-card { background: var(--bg-card); border: 1px solid var(--border-color); padding: 18px; border-radius: 12px; }
-    .metric-label { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
-    .metric-value { font-size: 22px; font-weight: 700; }
-    .metric-change { font-size: 11px; color: var(--accent-green); margin-top: 4px; }
-
-    /* Main Chart Section */
-    .section-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 24px; }
-    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-    .time-pills { display: flex; gap: 8px; }
-    .pill { background: transparent; border: none; color: var(--text-muted); padding: 4px 10px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: 0.2s; }
-    .pill.active, .pill:hover { background: #1c2d42; color: #fff; }
-
-    /* Investment Funds Grid */
-    .funds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .fund-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; }
-    .fund-img { height: 100px; background-size: cover; background-position: center; }
-    .fund-body { padding: 14px; }
-    .fund-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
-    .fund-desc { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; }
-    .fund-metrics { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 12px; }
-    .btn-outline { width: 100%; background: transparent; border: 1px solid var(--border-color); color: white; padding: 6px; border-radius: 6px; font-size: 12px; cursor: pointer; transition: 0.2s; }
-    .btn-outline:hover { background: #1c2d42; }
-
-    /* Market Watch Sidebar Lists */
-    .market-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
-    .market-symbol { font-weight: 600; font-size: 13px; }
-    .market-name { font-size: 11px; color: var(--text-muted); }
-    .market-price { text-align: right; font-size: 13px; font-weight: 600; }
-    .market-change { font-size: 11px; color: var(--accent-green); }
-
-    /* Quick Trade Box */
-    .trade-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 16px; margin-top: 24px; }
-    .trade-tabs { display: grid; grid-template-columns: 1fr 1fr; background: #050b14; padding: 3px; border-radius: 8px; margin-bottom: 12px; }
-    .trade-tab { background: transparent; border: none; color: var(--text-muted); padding: 8px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; }
-    .trade-tab.active { background: var(--accent-green); color: white; }
-    .trade-input { width: 100%; background: #050b14; border: 1px solid var(--border-color); color: white; padding: 10px; border-radius: 6px; margin-bottom: 12px; font-size: 13px; }
-  </style>
 </head>
 <body>
 
-  <!-- Left Sidebar Navigation -->
+  <!-- Sidebar Navigation -->
   <aside class="sidebar">
     <div>
       <div class="brand">
@@ -105,13 +19,13 @@
         </div>
       </div>
       <nav class="nav-list">
-        <div class="nav-item active">📊 Dashboard</div>
-        <div class="nav-item">📈 Markets</div>
-        <div class="nav-item">🔄 Trade</div>
-        <div class="nav-item">💼 Portfolio</div>
-        <div class="nav-item">🏦 Investment Funds</div>
-        <div class="nav-item">💎 Assets</div>
-        <div class="nav-item">⚙️ Settings</div>
+        <button class="nav-item active" data-view="dashboard">📊 Dashboard</button>
+        <button class="nav-item" data-view="markets">📈 Markets</button>
+        <button class="nav-item" data-view="trade">🔄 Trade</button>
+        <button class="nav-item" data-view="portfolio">💼 Portfolio</button>
+        <button class="nav-item" data-view="funds">🏦 Investment Funds</button>
+        <button class="nav-item" data-view="assets">💎 Assets</button>
+        <button class="nav-item" data-view="settings">⚙️ Settings</button>
       </nav>
     </div>
     
@@ -128,93 +42,98 @@
         <div class="platform-title">INNOVATION • SUSTAINABLE GROWTH • LONG-TERM VALUE</div>
       </div>
 
-      <!-- Hero Banner -->
-      <section class="hero-banner">
-        <h1>Build Wealth Through Tomorrow's Innovation</h1>
-        <p>Invest in Tesla, AI, Clean Energy, and Space — all in one institutional platform.</p>
-        <button class="btn-primary" id="exploreBtn">Explore Investment Funds →</button>
-      </section>
+      <!-- Dashboard View -->
+      <div id="view-dashboard" class="page-view">
+        <section class="hero-banner">
+          <h1>Build Wealth Through Tomorrow's Innovation</h1>
+          <p>Invest in Tesla, AI, Clean Energy, and Space — all in one institutional platform.</p>
+          <button class="btn-primary" id="exploreBtn">Explore Investment Funds →</button>
+        </section>
 
-      <!-- Top Financial Metrics -->
-      <section class="metrics-grid">
-        <div class="metric-card">
-          <div class="metric-label">Total Portfolio Value</div>
-          <div class="metric-value">$2,487,523.16</div>
-          <div class="metric-change">▲ +12.48% (24h)</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Total Gain/Loss</div>
-          <div class="metric-value" style="color: var(--accent-green);">$276,982.41</div>
-          <div class="metric-change">▲ +12.53% (All Time)</div>
-        </div>
-        <div class="metric-card">
-          <div class="metric-label">Available Balance</div>
-          <div class="metric-value">$502,316.78</div>
-        </div>
-      </section>
-
-      <!-- Live Interactive Chart -->
-      <section class="section-card">
-        <div class="section-header">
-          <h3>Portfolio Performance</h3>
-          <div class="time-pills">
-            <button class="pill">1D</button>
-            <button class="pill">1W</button>
-            <button class="pill active">1M</button>
-            <button class="pill">1Y</button>
-            <button class="pill">ALL</button>
+        <section class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">Total Portfolio Value</div>
+            <div class="metric-value">$2,487,523.16</div>
+            <div class="metric-change">▲ +12.48% (24h)</div>
           </div>
-        </div>
-        <div style="height: 220px;">
-          <canvas id="performanceChart"></canvas>
-        </div>
-      </section>
-
-      <!-- Fund Cards -->
-      <h3 id="fundsSection">Investment Funds</h3>
-      <div class="funds-grid" style="margin-top: 12px;">
-        <div class="fund-card">
-          <div class="fund-img" style="background-image: url('https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=400&q=80');"></div>
-          <div class="fund-body">
-            <div class="fund-title">Tesla Equity Fund</div>
-            <div class="fund-desc">Direct exposure to Tesla's growth</div>
-            <div class="fund-metrics">
-              <span style="color: var(--accent-green);">+18.24% YTD</span>
-              <span>$842,316</span>
-            </div>
-            <button class="btn-outline action-btn">Invest Now</button>
+          <div class="metric-card">
+            <div class="metric-label">Total Gain/Loss</div>
+            <div class="metric-value" style="color: var(--accent-green);">$276,982.41</div>
+            <div class="metric-change">▲ +12.53% (All Time)</div>
           </div>
-        </div>
-
-        <div class="fund-card">
-          <div class="fund-img" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80');"></div>
-          <div class="fund-body">
-            <div class="fund-title">AI Innovation Fund</div>
-            <div class="fund-desc">Top AI companies & robotics</div>
-            <div class="fund-metrics">
-              <span style="color: var(--accent-green);">+14.62% YTD</span>
-              <span>$637,428</span>
-            </div>
-            <button class="btn-outline action-btn">Invest Now</button>
+          <div class="metric-card">
+            <div class="metric-label">Available Balance</div>
+            <div class="metric-value">$502,316.78</div>
           </div>
-        </div>
+        </section>
 
-        <div class="fund-card">
-          <div class="fund-img" style="background-image: url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=400&q=80');"></div>
-          <div class="fund-body">
-            <div class="fund-title">Clean Energy Fund</div>
-            <div class="fund-desc">Renewable energy & sustainability</div>
-            <div class="fund-metrics">
-              <span style="color: var(--accent-green);">+10.37% YTD</span>
-              <span>$502,765</span>
+        <section class="section-card">
+          <div class="section-header">
+            <h3>Portfolio Performance</h3>
+            <div class="time-pills">
+              <button class="pill">1D</button>
+              <button class="pill">1W</button>
+              <button class="pill active">1M</button>
+              <button class="pill">1Y</button>
+              <button class="pill">ALL</button>
             </div>
-            <button class="btn-outline action-btn">Invest Now</button>
+          </div>
+          <div style="height: 220px;">
+            <canvas id="performanceChart"></canvas>
+          </div>
+        </section>
+
+        <h3 id="fundsHeading">Investment Funds</h3>
+        <div class="funds-grid" style="margin-top: 12px;">
+          <div class="fund-card">
+            <div class="fund-img" style="background-image: url('https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=400&q=80');"></div>
+            <div class="fund-body">
+              <div class="fund-title">Tesla Equity Fund</div>
+              <div class="fund-desc">Direct exposure to Tesla's growth</div>
+              <div class="fund-metrics">
+                <span style="color: var(--accent-green);">+18.24% YTD</span>
+                <span>$842,316</span>
+              </div>
+              <button class="btn-outline fund-buy-btn">Invest Now</button>
+            </div>
+          </div>
+
+          <div class="fund-card">
+            <div class="fund-img" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80');"></div>
+            <div class="fund-body">
+              <div class="fund-title">AI Innovation Fund</div>
+              <div class="fund-desc">Top AI companies & robotics</div>
+              <div class="fund-metrics">
+                <span style="color: var(--accent-green);">+14.62% YTD</span>
+                <span>$637,428</span>
+              </div>
+              <button class="btn-outline fund-buy-btn">Invest Now</button>
+            </div>
+          </div>
+
+          <div class="fund-card">
+            <div class="fund-img" style="background-image: url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=400&q=80');"></div>
+            <div class="fund-body">
+              <div class="fund-title">Clean Energy Fund</div>
+              <div class="fund-desc">Renewable energy & sustainability</div>
+              <div class="fund-metrics">
+                <span style="color: var(--accent-green);">+10.37% YTD</span>
+                <span>$502,765</span>
+              </div>
+              <button class="btn-outline fund-buy-btn">Invest Now</button>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- General View Placeholder -->
+      <div id="view-generic" class="page-view" style="display: none;">
+        <h2 id="generic-title">Section View</h2>
+        <p style="color: var(--text-muted); margin-top: 12px;">This panel is loaded dynamically via app.js.</p>
+      </div>
     </main>
 
-    <!-- Right Sidebar Watchlist & Tools -->
+    <!-- Right Sidebar Watchlist & Trade Box -->
     <aside class="right-sidebar">
       <div class="top-bar" style="justify-content: flex-end;">
         <div class="user-badge">👤 Institutional Investor</div>
@@ -258,12 +177,11 @@
         </div>
       </div>
 
-      <!-- Quick Trade Section -->
       <div class="trade-box">
         <h4>Quick Trade</h4>
         <div class="trade-tabs" style="margin-top: 10px;">
-          <button class="trade-tab active" id="buyTab">Buy</button>
-          <button class="trade-tab" id="sellTab">Sell</button>
+          <button class="trade-tab active">Buy</button>
+          <button class="trade-tab">Sell</button>
         </div>
         <input type="text" class="trade-input" id="tradeAsset" value="Tesla (TSLA)">
         <input type="text" class="trade-input" id="tradeAmount" value="$ 1,000">
@@ -272,117 +190,6 @@
     </aside>
   </div>
 
-  <!-- Internal JavaScript -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // 1. Initialize Chart
-      const chartDatasets = {
-        '1D': [2.42, 2.44, 2.43, 2.46, 2.48],
-        '1W': [2.10, 2.25, 2.30, 2.38, 2.48],
-        '1M': [1.40, 1.60, 1.50, 1.90, 2.48],
-        '1Y': [0.80, 1.10, 1.40, 1.95, 2.48],
-        'ALL': [0.20, 0.50, 1.10, 1.80, 2.48]
-      };
-
-      const chartLabels = {
-        '1D': ['09:00', '11:00', '13:00', '15:00', '17:00'],
-        '1W': ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
-        '1M': ['Aug 1', 'Aug 7', 'Aug 14', 'Aug 21', 'Aug 28'],
-        '1Y': ['Q1', 'Q2', 'Q3', 'Q4', 'Q4 End'],
-        'ALL': ['2022', '2023', '2024', '2025', '2026']
-      };
-
-      const ctx = document.getElementById('performanceChart').getContext('2d');
-      const gradient = ctx.createLinearGradient(0, 0, 0, 200);
-      gradient.addColorStop(0, 'rgba(16, 185, 129, 0.35)');
-      gradient.addColorStop(1, 'rgba(16, 185, 129, 0)');
-
-      const myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: chartLabels['1M'],
-          datasets: [{
-            data: chartDatasets['1M'],
-            borderColor: '#10b981',
-            borderWidth: 2,
-            fill: true,
-            backgroundColor: gradient,
-            tension: 0.4,
-            pointRadius: 0
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
-          scales: {
-            x: { grid: { color: '#162436' }, ticks: { color: '#8a99ad' } },
-            y: { grid: { color: '#162436' }, ticks: { color: '#8a99ad', callback: val => '$' + val + 'M' } }
-          }
-        }
-      });
-
-      // 2. Timeframe Pill Buttons Interactivity
-      const pills = document.querySelectorAll('.pill');
-      pills.forEach(pill => {
-        pill.addEventListener('click', (e) => {
-          pills.forEach(p => p.classList.remove('active'));
-          e.target.classList.add('active');
-          const range = e.target.textContent.trim();
-          if (chartDatasets[range]) {
-            myChart.data.labels = chartLabels[range];
-            myChart.data.datasets[0].data = chartDatasets[range];
-            myChart.update();
-          }
-        });
-      });
-
-      // 3. Sidebar Navigation Interactivity
-      const navItems = document.querySelectorAll('.nav-item');
-      navItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-          navItems.forEach(n => n.classList.remove('active'));
-          e.currentTarget.classList.add('active');
-        });
-      });
-
-      // 4. Buy / Sell Tab Switcher
-      const buyTab = document.getElementById('buyTab');
-      const sellTab = document.getElementById('sellTab');
-      const executeTradeBtn = document.getElementById('executeTradeBtn');
-
-      buyTab.addEventListener('click', () => {
-        buyTab.classList.add('active');
-        sellTab.classList.remove('active');
-        executeTradeBtn.style.background = 'var(--accent-green)';
-        executeTradeBtn.textContent = 'Buy TSLA';
-      });
-
-      sellTab.addEventListener('click', () => {
-        sellTab.classList.add('active');
-        buyTab.classList.remove('active');
-        executeTradeBtn.style.background = 'var(--accent-red)';
-        executeTradeBtn.textContent = 'Sell TSLA';
-      });
-
-      // 5. Button Actions & Alerts
-      document.getElementById('exploreBtn').addEventListener('click', () => {
-        document.getElementById('fundsSection').scrollIntoView({ behavior: 'smooth' });
-      });
-
-      executeTradeBtn.addEventListener('click', () => {
-        const type = buyTab.classList.contains('active') ? 'Buy' : 'Sell';
-        const amount = document.getElementById('tradeAmount').value;
-        alert(`Order Executed: ${type} ${amount} of Tesla (TSLA)`);
-      });
-
-      document.querySelectorAll('.action-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const fundName = e.target.parentElement.querySelector('.fund-title').textContent;
-          alert(`Redirecting to investment workflow for: ${fundName}`);
-        });
-      });
-    });
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
