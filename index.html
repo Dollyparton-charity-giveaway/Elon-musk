@@ -9,48 +9,46 @@
 </head>
 <body>
 
-  <!-- Sidebar Navigation -->
+  <!-- Sidebar -->
   <aside class="sidebar">
     <div>
       <div class="brand">
-        <div>
-          <div class="brand-logo">TESLA</div>
-          <div class="brand-subtitle">INVESTMENT PLATFORM</div>
-        </div>
+        <div class="brand-logo">T E S L A</div>
       </div>
       <nav class="nav-list">
-        <button class="nav-item active" data-view="dashboard">📊 Dashboard</button>
-        <button class="nav-item" data-view="markets">📈 Markets</button>
-        <button class="nav-item" data-view="trade">🔄 Trade</button>
-        <button class="nav-item" data-view="portfolio">💼 Portfolio</button>
-        <button class="nav-item" data-view="funds">🏦 Investment Funds</button>
-        <button class="nav-item" data-view="assets">💎 Assets</button>
-        <button class="nav-item" data-view="settings">⚙️ Settings</button>
+        <button class="nav-item active" data-target="view-dashboard">📊 Dashboard</button>
+        <button class="nav-item" data-target="view-markets">📈 Markets</button>
+        <button class="nav-item" data-target="view-trade">🔄 Trade</button>
+        <button class="nav-item" data-target="view-portfolio">💼 Portfolio</button>
+        <button class="nav-item" data-target="view-funds">🏦 Investment Funds</button>
+        <button class="nav-item" data-target="view-assets">💎 Assets</button>
+        <button class="nav-item" data-target="view-settings">⚙️ Settings</button>
       </nav>
-    </div>
-    
-    <div class="sidebar-promo">
-      <h4>Invest in the Future</h4>
-      <p>Real assets. Real innovation. Real returns.</p>
     </div>
   </aside>
 
+  <!-- Main Layout -->
   <div class="layout-wrapper">
-    <!-- Main Center Area -->
-    <main class="main-content">
-      <div class="top-bar">
-        <div class="platform-title">INNOVATION • SUSTAINABLE GROWTH • LONG-TERM VALUE</div>
+    <!-- Global Header -->
+    <header class="global-header">
+      <div class="search-bar">
+        <span>🔍</span>
+        <input type="text" placeholder="Search stocks, funds, assets...">
       </div>
+      <div class="user-badge">
+        🔔 👤 Institutional Investor (VIP Access)
+      </div>
+    </header>
 
-      <!-- Dashboard View -->
-      <div id="view-dashboard" class="page-view">
+    <div class="content-area">
+      <!-- VIEW 1: DASHBOARD -->
+      <div id="view-dashboard" class="page-view active">
         <section class="hero-banner">
           <h1>Build Wealth Through Tomorrow's Innovation</h1>
           <p>Invest in Tesla, AI, Clean Energy, and Space — all in one institutional platform.</p>
-          <button class="btn-primary" id="exploreBtn">Explore Investment Funds →</button>
+          <button class="btn-primary" onclick="switchView('view-funds')">Explore Investment Funds →</button>
         </section>
-
-        <section class="metrics-grid">
+        <div class="metrics-grid">
           <div class="metric-card">
             <div class="metric-label">Total Portfolio Value</div>
             <div class="metric-value">$2,487,523.16</div>
@@ -61,133 +59,165 @@
             <div class="metric-value" style="color: var(--accent-green);">$276,982.41</div>
             <div class="metric-change">▲ +12.53% (All Time)</div>
           </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: MARKETS -->
+      <div id="view-markets" class="page-view">
+        <h2>Market Overview</h2>
+        <div class="metrics-grid" style="margin-top: 16px;">
           <div class="metric-card">
-            <div class="metric-label">Available Balance</div>
-            <div class="metric-value">$502,316.78</div>
+            <div class="metric-label">S&P 500</div>
+            <div class="metric-value" style="font-size: 16px;">5,497.21 <span class="metric-change">▲ 1.21%</span></div>
           </div>
-        </section>
+          <div class="metric-card">
+            <div class="metric-label">NASDAQ</div>
+            <div class="metric-value" style="font-size: 16px;">17,117.76 <span class="metric-change">▲ 1.24%</span></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">DOW JONES</div>
+            <div class="metric-value" style="font-size: 16px;">40,823.17 <span class="metric-change">▲ 1.12%</span></div>
+          </div>
+        </div>
+        <h3 style="margin-top: 24px;">Top Gainers</h3>
+        <table class="data-table">
+          <tr><th>Symbol</th><th>Price</th><th>Change</th></tr>
+          <tr><td><strong>TSLA</strong> Tesla Inc.</td><td>$187.45</td><td style="color:var(--accent-green)">+4.32%</td></tr>
+          <tr><td><strong>NVDA</strong> NVIDIA Corp.</td><td>$142.76</td><td style="color:var(--accent-green)">+3.21%</td></tr>
+        </table>
+      </div>
 
-        <section class="section-card">
-          <div class="section-header">
-            <h3>Portfolio Performance</h3>
-            <div class="time-pills">
-              <button class="pill">1D</button>
-              <button class="pill">1W</button>
-              <button class="pill active">1M</button>
-              <button class="pill">1Y</button>
-              <button class="pill">ALL</button>
+      <!-- VIEW 3: TRADE -->
+      <div id="view-trade" class="page-view">
+        <h2>Trade</h2>
+        <div class="split-layout">
+          <div class="trade-box">
+            <div class="trade-tabs">
+              <button class="trade-tab active">Buy</button>
+              <button class="trade-tab">Sell</button>
             </div>
+            <div class="metric-label" style="margin-top:12px;">Asset</div>
+            <input type="text" class="trade-input" value="Tesla (TSLA)">
+            <div class="metric-label">Order Type</div>
+            <input type="text" class="trade-input" value="Market">
+            <div class="metric-label">Amount</div>
+            <input type="text" class="trade-input" value="$ 1,000">
+            <button class="btn-primary" style="width: 100%; background: var(--accent-green);">Review Order</button>
           </div>
-          <div style="height: 220px;">
-            <canvas id="performanceChart"></canvas>
+          <div class="order-book section-card">
+            <h3>Order Book</h3>
+            <table class="data-table">
+              <tr><th>Bid Size</th><th>Bid Price</th><th>Ask Price</th><th>Ask Size</th></tr>
+              <tr><td>1,200</td><td style="color:var(--accent-green)">$187.42</td><td style="color:var(--accent-red)">$187.50</td><td>1,100</td></tr>
+              <tr><td>2,450</td><td style="color:var(--accent-green)">$187.40</td><td style="color:var(--accent-red)">$187.52</td><td>1,850</td></tr>
+            </table>
           </div>
-        </section>
+        </div>
+      </div>
 
-        <h3 id="fundsHeading">Investment Funds</h3>
-        <div class="funds-grid" style="margin-top: 12px;">
+      <!-- VIEW 4: PORTFOLIO -->
+      <div id="view-portfolio" class="page-view">
+        <h2>Portfolio</h2>
+        <section class="section-card" style="margin-top: 16px;">
+          <h3>Holdings</h3>
+          <table class="data-table">
+            <tr><th>Asset</th><th>Shares</th><th>Avg. Cost</th><th>Current Price</th><th>Market Value</th><th>P/L</th></tr>
+            <tr><td>TSLA</td><td>12.5</td><td>$162.34</td><td>$187.45</td><td>$2,343.13</td><td style="color:var(--accent-green)">+15.42%</td></tr>
+            <tr><td>NVDA</td><td>8.2</td><td>$128.76</td><td>$142.76</td><td>$1,170.59</td><td style="color:var(--accent-green)">+10.91%</td></tr>
+            <tr><td>AAPL</td><td>15.0</td><td>$201.32</td><td>$229.13</td><td>$3,436.95</td><td style="color:var(--accent-green)">+13.79%</td></tr>
+          </table>
+        </section>
+      </div>
+
+      <!-- VIEW 5: INVESTMENT FUNDS -->
+      <div id="view-funds" class="page-view">
+        <h2>Investment Funds</h2>
+        <div class="time-pills" style="margin: 16px 0;">
+          <button class="pill active">All Funds</button>
+          <button class="pill">Equity</button>
+          <button class="pill">Thematic</button>
+          <button class="pill">ESG</button>
+        </div>
+        <div class="funds-grid">
           <div class="fund-card">
-            <div class="fund-img" style="background-image: url('https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=400&q=80');"></div>
             <div class="fund-body">
               <div class="fund-title">Tesla Equity Fund</div>
-              <div class="fund-desc">Direct exposure to Tesla's growth</div>
-              <div class="fund-metrics">
+              <div class="fund-metrics" style="margin-top: 10px;">
                 <span style="color: var(--accent-green);">+18.24% YTD</span>
-                <span>$842,316</span>
+                <span style="font-size: 16px; font-weight: bold;">$842,316.42</span>
               </div>
-              <button class="btn-outline fund-buy-btn">Invest Now</button>
+              <button class="btn-outline fund-invest-btn" data-fund="tesla" style="margin-top: 10px;">Invest Now</button>
             </div>
           </div>
-
           <div class="fund-card">
-            <div class="fund-img" style="background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=400&q=80');"></div>
             <div class="fund-body">
               <div class="fund-title">AI Innovation Fund</div>
-              <div class="fund-desc">Top AI companies & robotics</div>
-              <div class="fund-metrics">
+              <div class="fund-metrics" style="margin-top: 10px;">
                 <span style="color: var(--accent-green);">+14.62% YTD</span>
-                <span>$637,428</span>
+                <span style="font-size: 16px; font-weight: bold;">$637,428.17</span>
               </div>
-              <button class="btn-outline fund-buy-btn">Invest Now</button>
-            </div>
-          </div>
-
-          <div class="fund-card">
-            <div class="fund-img" style="background-image: url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=400&q=80');"></div>
-            <div class="fund-body">
-              <div class="fund-title">Clean Energy Fund</div>
-              <div class="fund-desc">Renewable energy & sustainability</div>
-              <div class="fund-metrics">
-                <span style="color: var(--accent-green);">+10.37% YTD</span>
-                <span>$502,765</span>
-              </div>
-              <button class="btn-outline fund-buy-btn">Invest Now</button>
+              <button class="btn-outline" style="margin-top: 10px;">Invest Now</button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- General View Placeholder -->
-      <div id="view-generic" class="page-view" style="display: none;">
-        <h2 id="generic-title">Section View</h2>
-        <p style="color: var(--text-muted); margin-top: 12px;">This panel is loaded dynamically via app.js.</p>
-      </div>
-    </main>
-
-    <!-- Right Sidebar Watchlist & Trade Box -->
-    <aside class="right-sidebar">
-      <div class="top-bar" style="justify-content: flex-end;">
-        <div class="user-badge">👤 Institutional Investor</div>
-      </div>
-
-      <div class="section-header">
-        <h3>Market Watch</h3>
-        <span style="font-size: 11px; color: var(--accent-blue); cursor: pointer;">View All →</span>
-      </div>
-
-      <div class="market-list">
-        <div class="market-item">
-          <div>
-            <div class="market-symbol">TSLA</div>
-            <div class="market-name">Tesla Inc.</div>
+      <!-- VIEW 6: ASSETS -->
+      <div id="view-assets" class="page-view">
+        <h2>Assets</h2>
+        <div class="split-layout" style="margin-top: 16px;">
+          <div class="section-card text-center">
+            <h3>Total Assets</h3>
+            <div style="font-size: 28px; font-weight: bold; margin: 10px 0;">$2,487,523.16</div>
+            <div class="donut-placeholder">Asset Allocation Chart Area</div>
           </div>
-          <div class="market-price">
-            <div>$187.45</div>
-            <div class="market-change">▲ +4.32%</div>
-          </div>
-        </div>
-        <div class="market-item">
-          <div>
-            <div class="market-symbol">NVDA</div>
-            <div class="market-name">NVIDIA Corp.</div>
-          </div>
-          <div class="market-price">
-            <div>$142.76</div>
-            <div class="market-change">▲ +3.21%</div>
-          </div>
-        </div>
-        <div class="market-item">
-          <div>
-            <div class="market-symbol">AAPL</div>
-            <div class="market-name">Apple Inc.</div>
-          </div>
-          <div class="market-price">
-            <div>$229.13</div>
-            <div class="market-change">▲ +1.87%</div>
+          <div class="section-card">
+            <h3>Asset Allocation</h3>
+            <table class="data-table">
+              <tr><td>TSLA</td><td>34.2%</td><td>$842,316.42</td></tr>
+              <tr><td>NVDA</td><td>18.7%</td><td>$464,310.17</td></tr>
+            </table>
           </div>
         </div>
       </div>
 
-      <div class="trade-box">
-        <h4>Quick Trade</h4>
-        <div class="trade-tabs" style="margin-top: 10px;">
-          <button class="trade-tab active">Buy</button>
-          <button class="trade-tab">Sell</button>
+      <!-- VIEW 7: SETTINGS -->
+      <div id="view-settings" class="page-view">
+        <h2>Settings</h2>
+        <div class="split-layout" style="margin-top: 16px;">
+          <div class="section-card">
+            <h3>Account</h3>
+            <div class="market-item"><span>Profile Information</span><span>></span></div>
+            <div class="market-item"><span>Account Type</span><span style="color:var(--text-muted)">VIP Access</span></div>
+            <h3 style="margin-top: 20px;">Security</h3>
+            <div class="market-item"><span>Two-Factor Auth</span><span style="color:var(--accent-green)">Enabled</span></div>
+          </div>
+          <div class="section-card text-center" style="border: 1px solid var(--accent-blue);">
+            <h3>Institutional Access</h3>
+            <p style="color: var(--text-muted); font-size: 12px; margin: 12px 0;">Unlock exclusive features and institutional-grade opportunities.</p>
+            <button class="btn-outline" style="border-color: var(--accent-blue); color: var(--accent-blue);">Upgrade to Institutional</button>
+          </div>
         </div>
-        <input type="text" class="trade-input" id="tradeAsset" value="Tesla (TSLA)">
-        <input type="text" class="trade-input" id="tradeAmount" value="$ 1,000">
-        <button class="btn-primary" id="executeTradeBtn" style="width: 100%; background: var(--accent-green);">Buy TSLA</button>
       </div>
-    </aside>
+
+      <!-- VIEW 8: TESLA EQUITY FUND DETAIL -->
+      <div id="view-fund-detail" class="page-view">
+        <button class="btn-outline" style="width: auto; margin-bottom: 16px;" onclick="switchView('view-funds')">← Back to Funds</button>
+        <section class="hero-banner" style="background: linear-gradient(90deg, #111e30 0%, #050b14 100%);">
+          <h1 style="font-size: 20px;">Tesla Equity Fund</h1>
+          <p>Direct exposure to Tesla's growth.</p>
+          <div style="font-size: 28px; font-weight: bold; color: var(--accent-green); margin-top: 12px;">+18.24% YTD</div>
+          <button class="btn-primary" style="margin-top: 16px;">Invest Now</button>
+        </section>
+        <div class="section-card">
+          <h3>Performance</h3>
+          <div style="height: 200px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--border-color); color: var(--text-muted);">
+            [ Detailed Fund Chart Renders Here ]
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <script src="app.js"></script>
