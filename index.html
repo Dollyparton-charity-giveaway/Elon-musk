@@ -270,39 +270,7 @@
     </aside>
   </div>
 
-  <!-- Script to Render Live Performance Line Chart -->
-  <script>
-    const ctx = document.getElementById('performanceChart').getContext('2d');
-    
-    // Gradient fill under the chart line
-    const gradient = ctx.createLinearGradient(0, 0, 0, 200);
-    gradient.addColorStop(0, 'rgba(16, 185, 129, 0.3)');
-    gradient.addColorStop(1, 'rgba(16, 185, 129, 0)');
-
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Aug 1', 'Aug 7', 'Aug 14', 'Aug 21', 'Aug 28'],
-        datasets: [{
-          data: [1.4, 1.6, 1.5, 1.9, 2.48],
-          borderColor: '#10b981',
-          borderWidth: 2,
-          fill: true,
-          backgroundColor: gradient,
-          tension: 0.4,
-          pointRadius: 0
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { grid: { color: '#162436' }, ticks: { color: '#8a99ad' } },
-          y: { grid: { color: '#162436' }, ticks: { color: '#8a99ad', callback: value => '$' + value + 'M' } }
-        }
-      }
-    });
-  </script>
+  <!-- Connects your external JavaScript logic file -->
+  <script src="app.js"></script>
 </body>
 </html>
