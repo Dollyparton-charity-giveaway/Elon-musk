@@ -1,16 +1,14 @@
-// Function attached to the global window to allow HTML onclick="" attributes to trigger it
 window.switchView = function(viewId) {
-  // 1. Hide all pages
   const views = document.querySelectorAll('.page-view');
   views.forEach(view => view.classList.remove('active'));
 
-  // 2. Show target page
   const targetView = document.getElementById(viewId);
   if (targetView) {
     targetView.classList.add('active');
+  } else {
+    document.getElementById('view-generic').classList.add('active');
   }
 
-  // 3. Update sidebar active states based on what view is open
   const navItems = document.querySelectorAll('.nav-item');
   navItems.forEach(item => {
     item.classList.remove('active');
@@ -19,47 +17,66 @@ window.switchView = function(viewId) {
     }
   });
 
-  // Scroll to top upon switching views
   window.scrollTo(0, 0);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Sidebar Click Listeners
-  const navItems = document.querySelectorAll('.nav-item');
-  navItems.forEach(item => {
+  // Sidebar Router Handlers
+  document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', (e) => {
       const targetId = e.currentTarget.getAttribute('data-target');
       window.switchView(targetId);
     });
   });
 
-  // Trade Tab Logic (Buy/Sell colors)
-  const tradeTabs = document.querySelectorAll('.trade-tab');
-  const reviewBtn = document.querySelector('.trade-box .btn-primary');
-  
-  if (tradeTabs.length > 0 && reviewBtn) {
-    tradeTabs.forEach(tab => {
-      tab.addEventListener('click', (e) => {
-        tradeTabs.forEach(t => t.classList.remove('active'));
-        e.target.classList.add('active');
-        
-        if (e.target.textContent === 'Sell') {
-          reviewBtn.style.background = 'var(--accent-red)';
-        } else {
-          reviewBtn.style.background = 'var(--accent-green)';
-        }
-      });
-    });
-  }
-
-  // Click listener specifically for the Tesla Fund 'Invest Now' button to open View 8
-  const teslaInvestBtn = document.querySelector('.fund-invest-btn[data-fund="tesla"]');
-  if (teslaInvestBtn) {
-    teslaInvestBtn.addEventListener('click', () => {
+  // Invest Now to Fund Detail Screen
+  document.querySelectorAll('.fund-invest-btn[data-fund="tesla"]').forEach(btn => {
+    btn.addEventListener('click', () => {
       window.switchView('view-fund-detail');
-      
-      // Clear sidebar active states because we are in a sub-view
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
     });
-  }
+  });
+
+  // Chart Helper Function
+  const createLineChart = (canvasId, labels, data, color) => {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const gradient = ctx.createLinearGradient(0, 0, 0, 150);
+    gradient.addColorStop(0, color.replace('1)', '0.35)'));
+    gradient.addColorStop(1, color.replace('1)', '0)'));
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: data,
+          borderColor: color,
+          borderWidth: 2,
+          fill: true,
+          backgroundColor: gradient,
+          tension: 0.3,
+          pointRadius: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#8a99ad', font: { size: 10 } } },
+          y: { grid: { color: '#162436' }, ticks: { color: '#8a99ad', font: { size: 10 } } }
+        }
+      }
+    });
+  };
+
+  // Render All Interactive Charts
+  const chartLabels = ['Aug 1', 'Aug 7', 'Aug 14', 'Aug 21', 'Aug 28'];
+  createLineChart('dashChart', chartLabels, [1.4, 1.6, 1.5, 1.9, 2.48], 'rgba(16, 185, 129, 1)');
+  createLineChart('tslaMiniChart', chartLabels, [170, 175, 172, 180, 187], 'rgba(16, 185, 129, 1)');
+  createLineChart('tradeChart', chartLabels, [170, 175, 172, 180, 187], 'rgba(16, 185, 129, 1)');
+  createLineChart('portfolioChart', chartLabels, [1.4, 1.6, 1.5, 1.9, 2.48], 'rgba(16, 185, 129, 1)');
+  createLineChart('teslaFundChart', ['Apr', 'May', 'Jun', 'Jul', 'Aug'], [700, 720, 780, 810, 842], 'rgba(16, 185, 129, 1)');
 });
