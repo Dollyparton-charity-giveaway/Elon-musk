@@ -12,7 +12,10 @@
   <!-- Left Sidebar -->
   <aside class="sidebar">
     <div class="brand">
-      <div class="brand-logo">T E S L A</div>
+      <div class="brand-logo">
+        <svg class="tesla-t" viewBox="0 0 342 35" fill="none"><path d="M0 .1a38.4 38.4 0 0 1 34.2 0l136.8 68.4L307.8.1A38.4 38.4 0 0 1 342 .1v12L171 80.5 0 12.1V.1z" fill="#e51937"/></svg>
+        <span>TESLA</span>
+      </div>
       <div class="brand-sub">INVESTMENT PLATFORM</div>
     </div>
 
@@ -28,13 +31,20 @@
       <button class="nav-item" onclick="switchView('view-settings')">⚙️ Settings</button>
     </nav>
 
-    <div class="sidebar-footer">
-      <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=300" alt="Tesla Model S" class="car-img">
-      <p>Invest in a cleaner, smarter, more sustainable future.</p>
+    <div class="sidebar-promo">
+      <div class="sidebar-promo-bg"></div>
+      <div class="sidebar-promo-content">
+        <p>Invest in a cleaner, smarter, more sustainable future.</p>
+        <div class="tesla-footer-brand">
+          <svg class="tesla-t-sm" viewBox="0 0 342 35" fill="#fff"><path d="M0 .1a38.4 38.4 0 0 1 34.2 0l136.8 68.4L307.8.1A38.4 38.4 0 0 1 342 .1v12L171 80.5 0 12.1V.1z"/></svg>
+          <div>TESLA</div>
+          <small>INVESTMENT PLATFORM</small>
+        </div>
+      </div>
     </div>
   </aside>
 
-  <!-- Main Container -->
+  <!-- Main Area -->
   <div class="layout-wrapper">
     
     <!-- Top Bar Header -->
@@ -44,405 +54,389 @@
         <input type="text" placeholder="Search stocks, funds, assets...">
       </div>
       <div class="header-right">
-        <span class="status-dot">● Market Open 10:24 AM (UTC)</span>
+        <span class="status-dot">● Market Open <small>10:24 AM (UTC)</small></span>
         <button class="icon-btn">🔔</button>
         <div class="user-profile">
           <div class="avatar">👤</div>
           <div>
             <div class="user-name">Institutional Investor</div>
-            <div class="user-tier">VIP Access</div>
+            <div class="user-tier">VIP Access ▾</div>
           </div>
         </div>
       </div>
     </header>
 
-    <!-- Page Content Router -->
     <main class="content-area">
 
-      <!-- 1. DASHBOARD VIEW -->
+      <!-- ====================================
+           1. DASHBOARD VIEW (MATCHES SCREEN #1)
+           ==================================== -->
       <section id="view-dashboard" class="page-view active">
-        <div class="dashboard-grid">
-          <div class="main-col">
-            <div class="hero-banner">
-              <h1>Build Wealth Through Tomorrow's Innovation</h1>
-              <p>Invest in Tesla, AI, Clean Energy, and Space — all in one institutional platform.</p>
-              <button class="btn-primary" onclick="switchView('view-funds')">Explore Investment Funds →</button>
-            </div>
-
-            <div class="metrics-grid margin-top">
-              <div class="metric-card">
-                <div class="metric-label">Total Portfolio Value</div>
-                <div class="metric-value">$2,487,523.16</div>
-                <div class="metric-change positive">▲ +12.48% (24h)</div>
-              </div>
-              <div class="metric-card">
-                <div class="metric-label">Total Gain/Loss</div>
-                <div class="metric-value positive">+$276,982.41</div>
-                <div class="metric-change positive">▲ +12.53% (All Time)</div>
-              </div>
-              <div class="metric-card">
-                <div class="metric-label">Available Balance</div>
-                <div class="metric-value">$502,316.78</div>
-                <button class="btn-sm">Deposit</button>
+        <div class="dash-grid-layout">
+          
+          <!-- LEFT / MAIN CONTENT (Column 1 & 2) -->
+          <div class="dash-main-col">
+            
+            <!-- Hero Banner -->
+            <div class="hero-banner-exact">
+              <div class="hero-overlay">
+                <h1>Build Wealth Through<br>Tomorrow's Innovation</h1>
+                <p>Invest in Tesla, AI, Clean Energy, and Space — all in one institutional platform.</p>
+                <button class="btn-hero" onclick="switchView('view-funds')">Explore Investment Funds ➔</button>
               </div>
             </div>
 
-            <div class="section-card margin-top">
-              <div class="section-header">
-                <h3>Portfolio Performance</h3>
-                <div class="time-pills">
-                  <button class="pill">1D</button>
-                  <button class="pill">1W</button>
-                  <button class="pill active">1M</button>
-                  <button class="pill">3M</button>
-                  <button class="pill">6M</button>
-                  <button class="pill">1Y</button>
-                  <button class="pill">ALL</button>
+            <!-- Top Metric Cards -->
+            <div class="metrics-row gap-12 margin-top">
+              <div class="card-dark metric-box">
+                <span class="lbl-muted">Total Portfolio Value</span>
+                <div class="val-hero">$2,487,523.16</div>
+                <div class="txt-pos">▲ +12.48% <span class="lbl-muted">(24h)</span></div>
+              </div>
+              <div class="card-dark metric-box">
+                <span class="lbl-muted">Total Gain/Loss</span>
+                <div class="val-hero txt-pos">+$276,982.41</div>
+                <div class="txt-pos">▲ +12.53% <span class="lbl-muted">(All Time)</span></div>
+              </div>
+              <div class="card-dark metric-box relative">
+                <span class="lbl-muted">Available Balance</span>
+                <div class="val-hero">$502,316.78</div>
+                <button class="btn-deposit-pill">Deposit</button>
+              </div>
+            </div>
+
+            <!-- Middle Section: Portfolio Performance & Quick Trade -->
+            <div class="dash-mid-grid margin-top">
+              <div class="card-dark perf-card">
+                <div class="card-header-flex">
+                  <h3>Portfolio Performance</h3>
+                  <div class="time-pills">
+                    <span>1D</span><span>1W</span><span class="active">1M</span><span>3M</span><span>6M</span><span>1Y</span><span>ALL</span>
+                  </div>
+                </div>
+                <div class="chart-summary-header">
+                  <span class="txt-pos font-bold">▲ +12.53%</span>
+                  <div class="val-sub font-bold">$2,487,523.16</div>
+                </div>
+                <div class="chart-wrapper"><canvas id="dashChartExact"></canvas></div>
+              </div>
+
+              <!-- Quick Trade Box -->
+              <div class="card-dark quick-trade-card">
+                <h3>Quick Trade</h3>
+                <div class="trade-toggle-bar margin-top">
+                  <button class="trade-btn active-buy" id="q-buy-btn" onclick="setQAction('buy')">Buy</button>
+                  <button class="trade-btn" id="q-sell-btn" onclick="setQAction('sell')">Sell</button>
+                </div>
+                
+                <div class="form-field margin-top">
+                  <label>Asset</label>
+                  <select class="input-dark" id="q-asset">
+                    <option value="TSLA">Tesla (TSLA)</option>
+                    <option value="NVDA">NVIDIA (NVDA)</option>
+                  </select>
+                </div>
+
+                <div class="form-field">
+                  <label>Amount</label>
+                  <div class="input-prefix-wrap">
+                    <span>$</span>
+                    <input type="number" class="input-dark" id="q-amount" value="1000">
+                  </div>
+                </div>
+
+                <div class="preset-pills">
+                  <span onclick="setQAmt(1000)">$1K</span>
+                  <span onclick="setQAmt(5000)">$5K</span>
+                  <span onclick="setQAmt(10000)">$10K</span>
+                  <span onclick="setQAmt(50000)">$50K</span>
+                </div>
+
+                <button class="btn-submit-trade margin-top" id="q-submit-btn" onclick="execQuickTrade()">Buy TSLA</button>
+
+                <div class="trade-meta-lines margin-top">
+                  <div><span>Estimated Shares</span><span id="q-est-shares">5.32</span></div>
+                  <div><span>Est. Price</span><span>$187.45</span></div>
+                  <div><span>Est. Total</span><span id="q-est-total">$1,000.00</span></div>
                 </div>
               </div>
-              <div class="chart-container margin-top"><canvas id="dashChart"></canvas></div>
             </div>
 
-            <div class="section-header margin-top">
+            <!-- Investment Funds Section -->
+            <div class="card-header-flex margin-top">
               <h3>Investment Funds</h3>
-              <a href="#" class="link-btn" onclick="switchView('view-funds')">View All →</a>
+              <a href="#" class="link-blue" onclick="switchView('view-funds')">View All ➔</a>
             </div>
 
-            <div class="funds-grid-4 margin-top">
-              <div class="fund-card">
+            <div class="funds-row-4 margin-top">
+              <!-- Fund 1 -->
+              <div class="card-dark fund-box">
+                <div class="fund-img-head tesla-bg-thumb"></div>
                 <div class="fund-title">Tesla Equity Fund</div>
                 <div class="fund-sub">Direct exposure to Tesla's growth</div>
-                <div class="fund-val-wrap">
-                  <span class="positive">+18.24% YTD</span>
-                  <span class="fund-val">$842,316.42</span>
+                <div class="fund-metrics-split">
+                  <span class="txt-pos font-bold">+18.24% <small>YTD</small></span>
+                  <span class="font-bold">$842,316.42</span>
                 </div>
-                <button class="btn-outline full-width" onclick="startFundFlow('Tesla Equity Fund')">Invest Now</button>
+                <button class="btn-card-action margin-top" onclick="startFundFlow('Tesla Equity Fund')">Invest Now ➔</button>
               </div>
-              <div class="fund-card">
+
+              <!-- Fund 2 -->
+              <div class="card-dark fund-box">
+                <div class="fund-img-head ai-bg-thumb"></div>
                 <div class="fund-title">AI Innovation Fund</div>
                 <div class="fund-sub">Top AI companies & robotics</div>
-                <div class="fund-val-wrap">
-                  <span class="positive">+14.62% YTD</span>
-                  <span class="fund-val">$637,428.17</span>
+                <div class="fund-metrics-split">
+                  <span class="txt-pos font-bold">+14.62% <small>YTD</small></span>
+                  <span class="font-bold">$637,428.17</span>
                 </div>
-                <button class="btn-outline full-width" onclick="startFundFlow('AI Innovation Fund')">Invest Now</button>
+                <button class="btn-card-action margin-top" onclick="startFundFlow('AI Innovation Fund')">Invest Now ➔</button>
               </div>
-              <div class="fund-card">
+
+              <!-- Fund 3 -->
+              <div class="card-dark fund-box">
+                <div class="fund-img-head clean-bg-thumb"></div>
                 <div class="fund-title">Clean Energy Fund</div>
                 <div class="fund-sub">Renewable energy & sustainability</div>
-                <div class="fund-val-wrap">
-                  <span class="positive">+10.37% YTD</span>
-                  <span class="fund-val">$502,765.03</span>
+                <div class="fund-metrics-split">
+                  <span class="txt-pos font-bold">+10.37% <small>YTD</small></span>
+                  <span class="font-bold">$502,765.03</span>
                 </div>
-                <button class="btn-outline full-width" onclick="startFundFlow('Clean Energy Fund')">Invest Now</button>
+                <button class="btn-card-action margin-top" onclick="startFundFlow('Clean Energy Fund')">Invest Now ➔</button>
               </div>
-              <div class="fund-card">
+
+              <!-- Fund 4 -->
+              <div class="card-dark fund-box">
+                <div class="fund-img-head space-bg-thumb"></div>
                 <div class="fund-title">Space Exploration Fund</div>
                 <div class="fund-sub">Space tech & next-gen aerospace</div>
-                <div class="fund-val-wrap">
-                  <span class="positive">+16.80% YTD</span>
-                  <span class="fund-val">$420,013.54</span>
+                <div class="fund-metrics-split">
+                  <span class="txt-pos font-bold">+16.80% <small>YTD</small></span>
+                  <span class="font-bold">$420,013.54</span>
                 </div>
-                <button class="btn-outline full-width" onclick="startFundFlow('Space Exploration Fund')">Invest Now</button>
+                <button class="btn-card-action margin-top" onclick="startFundFlow('Space Exploration Fund')">Invest Now ➔</button>
               </div>
             </div>
 
-            <div class="split-layout margin-top">
-              <div class="section-card">
+            <!-- Bottom Split: Allocation & Transaction History -->
+            <div class="dash-bottom-grid margin-top">
+              <div class="card-dark">
                 <h3>Portfolio Allocation</h3>
-                <div class="donut-flex margin-top">
-                  <div class="donut-val">$2.49M<br><small>Total Value</small></div>
-                  <ul class="alloc-list">
-                    <li><span class="dot tesla"></span> Tesla (TSLA) <span>34.2%</span></li>
-                    <li><span class="dot ai"></span> AI Innovation Fund <span>25.6%</span></li>
-                    <li><span class="dot clean"></span> Clean Energy Fund <span>20.3%</span></li>
-                    <li><span class="dot space"></span> Space Exploration <span>14.7%</span></li>
-                    <li><span class="dot cash"></span> Cash & Others <span>5.2%</span></li>
+                <div class="alloc-flex margin-top">
+                  <div class="donut-chart-box">
+                    <canvas id="allocDonut"></canvas>
+                    <div class="donut-center-text">
+                      <strong>$2.49M</strong>
+                      <small>Total Value</small>
+                    </div>
+                  </div>
+                  <ul class="alloc-legend">
+                    <li><span class="dot c-red"></span> Tesla (TSLA) <span>34.2%</span></li>
+                    <li><span class="dot c-blue"></span> AI Innovation Fund <span>25.6%</span></li>
+                    <li><span class="dot c-green"></span> Clean Energy Fund <span>20.3%</span></li>
+                    <li><span class="dot c-purple"></span> Space Exploration Fund <span>14.7%</span></li>
+                    <li><span class="dot c-gray"></span> Cash & Others <span>5.2%</span></li>
                   </ul>
                 </div>
               </div>
-              <div class="section-card">
-                <div class="section-header">
+
+              <div class="card-dark">
+                <div class="card-header-flex">
                   <h3>Transaction History</h3>
-                  <a href="#" class="link-btn">View All →</a>
+                  <a href="#" class="link-blue">View All ➔</a>
                 </div>
-                <table class="data-table margin-top">
-                  <tr><th>Date</th><th>Type</th><th>Asset</th><th>Amount</th><th>Status</th></tr>
-                  <tr><td>Aug 28, 2026</td><td class="positive">Buy</td><td>TSLA</td><td>$10,000.00</td><td class="tag-done">Completed</td></tr>
-                  <tr><td>Aug 27, 2026</td><td class="positive">Buy</td><td>NVDA</td><td>$5,000.00</td><td class="tag-done">Completed</td></tr>
-                  <tr><td>Aug 25, 2026</td><td class="negative">Sell</td><td>AAPL</td><td>$3,500.00</td><td class="tag-done">Completed</td></tr>
+                <table class="table-dark margin-top">
+                  <thead>
+                    <tr><th>Date</th><th>Type</th><th>Asset</th><th>Amount</th><th>Status</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Aug 28, 2026</td><td class="txt-pos">Buy</td><td>TSLA</td><td>$10,000.00</td><td><span class="tag-completed">Completed</span></td></tr>
+                    <tr><td>Aug 27, 2026</td><td class="txt-pos">Buy</td><td>NVDA</td><td>$5,000.00</td><td><span class="tag-completed">Completed</span></td></tr>
+                    <tr><td>Aug 25, 2026</td><td class="txt-neg">Sell</td><td>AAPL</td><td>$3,500.00</td><td><span class="tag-completed">Completed</span></td></tr>
+                    <tr><td>Aug 22, 2026</td><td class="txt-blue">Dividend</td><td>Tesla Fund</td><td>$1,250.00</td><td><span class="tag-completed">Completed</span></td></tr>
+                  </tbody>
                 </table>
               </div>
             </div>
+
           </div>
 
-          <div class="side-col">
-            <div class="section-card">
-              <div class="section-header">
+          <!-- RIGHT SIDEBAR COLUMN (Column 3) -->
+          <div class="dash-side-col">
+            
+            <!-- Market Watch -->
+            <div class="card-dark">
+              <div class="card-header-flex">
                 <h3>Market Watch</h3>
-                <a href="#" class="link-btn" onclick="switchView('view-markets')">View All →</a>
+                <a href="#" class="link-blue" onclick="switchView('view-markets')">View All ➔</a>
               </div>
-              <div class="tab-pills-sm margin-top">
-                <button class="pill active">Stocks</button>
-                <button class="pill">ETFs</button>
-                <button class="pill">Crypto</button>
+              <div class="tabs-sub-bar margin-top">
+                <span class="active">Stocks</span><span>ETFs</span><span>Crypto</span><span>Commodities</span>
               </div>
-              <div class="stock-list margin-top">
-                <div class="stock-item cursor-pointer" onclick="startTradeFlow('TSLA', 'buy')">
-                  <div><span class="badge tsla">T</span> TSLA<br><small>Tesla Inc.</small></div>
-                  <div class="text-right">$248.32<br><small class="positive">▲ +4.32%</small></div>
+              
+              <div class="market-list margin-top">
+                <div class="market-item" onclick="startTradeFlow('TSLA', 'buy')">
+                  <div class="symbol-box"><span class="badge-icon b-red">T</span><div><strong>TSLA</strong><br><small>Tesla Inc.</small></div></div>
+                  <div class="sparkline-placeholder"></div>
+                  <div class="text-right"><strong>$187.45</strong><br><small class="txt-pos">▲ +4.32%</small></div>
                 </div>
-                <div class="stock-item cursor-pointer" onclick="startTradeFlow('NVDA', 'buy')">
-                  <div><span class="badge nvda">N</span> NVDA<br><small>NVIDIA Corp.</small></div>
-                  <div class="text-right">$142.76<br><small class="positive">▲ +3.21%</small></div>
+
+                <div class="market-item" onclick="startTradeFlow('NVDA', 'buy')">
+                  <div class="symbol-box"><span class="badge-icon b-green">N</span><div><strong>NVDA</strong><br><small>NVIDIA Corp.</small></div></div>
+                  <div class="sparkline-placeholder"></div>
+                  <div class="text-right"><strong>$142.76</strong><br><small class="txt-pos">▲ +3.21%</small></div>
                 </div>
-                <div class="stock-item cursor-pointer" onclick="startTradeFlow('AAPL', 'buy')">
-                  <div><span class="badge aapl">A</span> AAPL<br><small>Apple Inc.</small></div>
-                  <div class="text-right">$229.13<br><small class="positive">▲ +1.87%</small></div>
+
+                <div class="market-item" onclick="startTradeFlow('AAPL', 'buy')">
+                  <div class="symbol-box"><span class="badge-icon b-gray">A</span><div><strong>AAPL</strong><br><small>Apple Inc.</small></div></div>
+                  <div class="sparkline-placeholder"></div>
+                  <div class="text-right"><strong>$229.13</strong><br><small class="txt-pos">▲ +1.87%</small></div>
+                </div>
+
+                <div class="market-item">
+                  <div class="symbol-box"><span class="badge-icon b-blue">M</span><div><strong>MSFT</strong><br><small>Microsoft Corp.</small></div></div>
+                  <div class="sparkline-placeholder"></div>
+                  <div class="text-right"><strong>$410.32</strong><br><small class="txt-pos">▲ +1.45%</small></div>
+                </div>
+
+                <div class="market-item">
+                  <div class="symbol-box"><span class="badge-icon b-orange">A</span><div><strong>AMZN</strong><br><small>Amazon.com Inc.</small></div></div>
+                  <div class="sparkline-placeholder"></div>
+                  <div class="text-right"><strong>$214.06</strong><br><small class="txt-pos">▲ +2.13%</small></div>
+                </div>
+
+                <div class="market-item">
+                  <div class="symbol-box"><span class="badge-icon b-yellow">G</span><div><strong>GOOGL</strong><br><small>Alphabet Inc.</small></div></div>
+                  <div class="sparkline-placeholder"></div>
+                  <div class="text-right"><strong>$178.24</strong><br><small class="txt-pos">▲ +1.92%</small></div>
                 </div>
               </div>
             </div>
 
-            <div class="section-card margin-top">
-              <h3>Quick Trade</h3>
-              <div class="trade-tabs margin-top">
-                <button class="trade-tab active" id="quick-buy-btn" onclick="setQuickTrade('buy')">Buy</button>
-                <button class="trade-tab" id="quick-sell-btn" onclick="setQuickTrade('sell')">Sell</button>
+            <!-- Recent News -->
+            <div class="card-dark margin-top">
+              <div class="card-header-flex">
+                <h3>Recent News & Insights</h3>
+                <a href="#" class="link-blue">View All ➔</a>
               </div>
-              <div class="form-group margin-top">
-                <label>Asset</label>
-                <select class="trade-input" id="quick-asset-select">
-                  <option value="TSLA">Tesla (TSLA)</option>
-                  <option value="NVDA">NVIDIA (NVDA)</option>
-                  <option value="AAPL">Apple (AAPL)</option>
-                </select>
+
+              <div class="news-list margin-top">
+                <div class="news-item">
+                  <div class="news-thumb news-1"></div>
+                  <div>
+                    <strong>Tesla Announces Next-Gen Battery Technology</strong>
+                    <div class="lbl-muted"><small>2h ago • Tesla News</small></div>
+                  </div>
+                </div>
+
+                <div class="news-item">
+                  <div class="news-thumb news-2"></div>
+                  <div>
+                    <strong>AI Investments Drive Strong Q3 Growth</strong>
+                    <div class="lbl-muted"><small>4h ago • Market Insights</small></div>
+                  </div>
+                </div>
+
+                <div class="news-item">
+                  <div class="news-thumb news-3"></div>
+                  <div>
+                    <strong>Clean Energy Fund Hits 15% Returns YTD</strong>
+                    <div class="lbl-muted"><small>6h ago • Investment News</small></div>
+                  </div>
+                </div>
+
+                <div class="news-item">
+                  <div class="news-thumb news-4"></div>
+                  <div>
+                    <strong>SpaceX Advances Starship Launch Timeline</strong>
+                    <div class="lbl-muted"><small>8h ago • Space & Defense</small></div>
+                  </div>
+                </div>
               </div>
-              <div class="form-group">
-                <label>Shares</label>
-                <input type="number" id="quick-shares-input" class="trade-input" value="10">
-              </div>
-              <button class="btn-primary full-width margin-top" style="background: var(--accent-green);" onclick="executeQuickTrade()">Launch Order →</button>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- 2. MARKETS VIEW -->
-      <section id="view-markets" class="page-view">
-        <h2>Markets Overview</h2>
-        <div class="metrics-grid margin-top">
-          <div class="metric-card"><div class="metric-label">S&P 500</div><div class="metric-value">5,497.21</div><div class="positive">▲ +1.21%</div></div>
-          <div class="metric-card"><div class="metric-label">NASDAQ</div><div class="metric-value">17,117.76</div><div class="positive">▲ +1.24%</div></div>
-          <div class="metric-card"><div class="metric-label">DOW JONES</div><div class="metric-value">40,823.17</div><div class="positive">▲ +1.12%</div></div>
-        </div>
-
-        <div class="section-card margin-top">
-          <h3>Top Gainers</h3>
-          <table class="data-table margin-top">
-            <tr><th>Symbol</th><th>Price</th><th>24h Change</th><th>Action</th></tr>
-            <tr><td><strong>TSLA</strong> Tesla Inc.</td><td>$248.32</td><td class="positive">+4.32%</td><td><button class="btn-outline" onclick="startTradeFlow('TSLA', 'buy')">Trade</button></td></tr>
-            <tr><td><strong>NVDA</strong> NVIDIA Corp.</td><td>$142.76</td><td class="positive">+3.21%</td><td><button class="btn-outline" onclick="startTradeFlow('NVDA', 'buy')">Trade</button></td></tr>
-            <tr><td><strong>AAPL</strong> Apple Inc.</td><td>$229.13</td><td class="positive">+1.87%</td><td><button class="btn-outline" onclick="startTradeFlow('AAPL', 'buy')">Trade</button></td></tr>
-          </table>
-        </div>
-      </section>
-
-      <!-- 3. TRADE HUB VIEW -->
-      <section id="view-trade-hub" class="page-view">
-        <h2>Trade Hub</h2>
-        <p class="text-muted margin-top">Select an operation to start the trade flow.</p>
-
-        <div class="split-layout margin-top">
-          <div class="section-card">
-            <h3>Buy Shares</h3>
-            <p class="text-muted margin-top">Purchase shares in technology and energy growth assets.</p>
-            <button class="btn-primary full-width margin-top" style="background: var(--accent-green);" onclick="startTradeFlow('TSLA', 'buy')">Buy TSLA Shares →</button>
-          </div>
-          <div class="section-card">
-            <h3>Sell Position</h3>
-            <p class="text-muted margin-top">Liquidate or rebalance existing portfolio positions.</p>
-            <button class="btn-primary full-width margin-top" style="background: var(--accent-red);" onclick="startTradeFlow('TSLA', 'sell')">Sell TSLA Positions →</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- 4. PORTFOLIO VIEW -->
-      <section id="view-portfolio" class="page-view">
-        <h2>Portfolio Holdings</h2>
-        <div class="metrics-grid margin-top">
-          <div class="metric-card"><div class="metric-label">Total Portfolio Value</div><div class="metric-value">$2,487,523.16</div></div>
-          <div class="metric-card"><div class="metric-label">Total Gain/Loss</div><div class="metric-value positive">+$276,982.41</div></div>
-        </div>
-        <div class="section-card margin-top">
-          <h3>Positions</h3>
-          <table class="data-table margin-top">
-            <tr><th>Asset</th><th>Shares</th><th>Avg Cost</th><th>Current</th><th>Market Value</th><th>Action</th></tr>
-            <tr><td>TSLA</td><td>25</td><td>$210.50</td><td>$248.32</td><td>$6,208.00</td><td><button class="btn-outline" onclick="startTradeFlow('TSLA', 'sell')">Sell</button></td></tr>
-            <tr><td>NVDA</td><td>8.2</td><td>$128.76</td><td>$142.76</td><td>$1,170.59</td><td><button class="btn-outline" onclick="startTradeFlow('NVDA', 'sell')">Sell</button></td></tr>
-          </table>
-        </div>
-      </section>
-
-      <!-- 5. INVESTMENT FUNDS PAGE -->
-      <section id="view-funds" class="page-view">
-        <h2>Investment Funds</h2>
-        <p class="text-muted">Diversify your portfolio with expertly managed funds.</p>
-
-        <div class="funds-grid-2 margin-top">
-          <div class="fund-card-lg">
-            <div class="fund-header-bg tesla-bg"></div>
-            <div class="fund-card-body">
-              <h3>Tesla Equity Fund</h3>
-              <p class="text-muted">Direct exposure to Tesla's ecosystem</p>
-              <div class="fund-metrics-lg margin-top">
-                <span class="positive">+18.24% YTD</span>
-                <strong>$842,316.42</strong>
+            <!-- Institutional Access Card -->
+            <div class="card-dark margin-top VIP-card">
+              <div class="vip-header">
+                <span class="crown-icon">👑</span>
+                <strong>Institutional Access</strong>
               </div>
-              <button class="btn-primary full-width margin-top" onclick="startFundFlow('Tesla Equity Fund')">Invest Now →</button>
+              <ul class="vip-list margin-top">
+                <li>✓ Exclusive Investment Opportunities</li>
+                <li>✓ Dedicated Account Manager</li>
+                <li>✓ Advanced Analytics & Research</li>
+                <li>✓ Priority Withdrawals</li>
+              </ul>
+              <button class="btn-vip margin-top">Upgrade to Institutional</button>
             </div>
-          </div>
 
-          <div class="fund-card-lg">
-            <div class="fund-header-bg ai-bg"></div>
-            <div class="fund-card-body">
-              <h3>AI Innovation Fund</h3>
-              <p class="text-muted">Top AI companies & robotics</p>
-              <div class="fund-metrics-lg margin-top">
-                <span class="positive">+14.62% YTD</span>
-                <strong>$637,428.17</strong>
-              </div>
-              <button class="btn-primary full-width margin-top" onclick="startFundFlow('AI Innovation Fund')">Invest Now →</button>
-            </div>
           </div>
         </div>
       </section>
 
-      <!-- 6. OTHER STANDARD VIEWS -->
-      <section id="view-assets" class="page-view"><h2>Assets</h2><p class="text-muted margin-top">Asset breakdown view.</p></section>
-      <section id="view-research" class="page-view"><h2>Research & Insights</h2><p class="text-muted margin-top">Latest market intelligence.</p></section>
-      <section id="view-reports" class="page-view"><h2>Reports</h2><p class="text-muted margin-top">Tax & performance reports.</p></section>
-      <section id="view-settings" class="page-view"><h2>Settings</h2><p class="text-muted margin-top">Account security preferences.</p></section>
+      <!-- STANDARD VIEWS FOR SIDEBAR ROUTING -->
+      <section id="view-markets" class="page-view"><h2>Markets Overview</h2><p class="lbl-muted margin-top">Market summary data.</p></section>
+      <section id="view-trade-hub" class="page-view"><h2>Trade Hub</h2><p class="lbl-muted margin-top">Execute buy and sell positions.</p></section>
+      <section id="view-portfolio" class="page-view"><h2>Portfolio</h2><p class="lbl-muted margin-top">Your current positions.</p></section>
+      <section id="view-funds" class="page-view"><h2>Investment Funds</h2><p class="lbl-muted margin-top">Tesla, AI, Clean Energy, and Space Funds.</p></section>
+      <section id="view-assets" class="page-view"><h2>Assets</h2><p class="lbl-muted margin-top">Asset breakdown.</p></section>
+      <section id="view-research" class="page-view"><h2>Research & Insights</h2><p class="lbl-muted margin-top">Market intelligence reports.</p></section>
+      <section id="view-reports" class="page-view"><h2>Reports</h2><p class="lbl-muted margin-top">Financial statements.</p></section>
+      <section id="view-settings" class="page-view"><h2>Settings</h2><p class="lbl-muted margin-top">Account configurations.</p></section>
 
-
-      <!-- =======================================
-           INVESTMENT FUND FULL-SCREEN FLOW PAGES
-           ======================================= -->
-
-      <!-- FUND STEP 1: DETAILS -->
+      <!-- FULL SCREEN FLOWS (FROM IMAGE 3) -->
       <section id="fund-flow-details" class="page-view">
-        <button class="btn-outline" onclick="switchView('view-funds')">← Back to Investment Funds</button>
-        <div class="section-card margin-top">
-          <h1 id="fund-detail-name">Tesla Equity Fund</h1>
-          <p class="text-muted">Direct exposure to growth, AI, and sustainable energy.</p>
-          <div class="metrics-grid margin-top">
-            <div><small class="text-muted">YTD Return</small><div class="positive font-lg">+18.24%</div></div>
-            <div><small class="text-muted">Current Price</small><div class="font-lg">$248.32</div></div>
-            <div><small class="text-muted">Management Fee</small><div class="font-lg">1.5%</div></div>
-          </div>
-          <button class="btn-primary btn-lg margin-top" onclick="goToFundStep('amount')">Invest Now →</button>
+        <button class="btn-card-action" onclick="switchView('view-dashboard')">← Back to Dashboard</button>
+        <div class="card-dark margin-top" style="max-width: 600px;">
+          <h2 id="fund-detail-name">Tesla Equity Fund</h2>
+          <p class="lbl-muted margin-top">Direct exposure to Tesla's ecosystem and technological growth.</p>
+          <button class="btn-hero margin-top" onclick="goToFundStep('amount')">Invest Now ➔</button>
         </div>
       </section>
 
-      <!-- FUND STEP 2: AMOUNT SELECTION -->
       <section id="fund-flow-amount" class="page-view">
-        <button class="btn-outline" onclick="switchView('fund-flow-details')">← Back to Details</button>
-        <div class="modal-card-center margin-top">
+        <div class="card-dark margin-top" style="max-width: 450px; margin: 40px auto;">
           <h2>Select Investment Amount</h2>
-          <div class="quick-amounts margin-top">
-            <button class="amount-pill" onclick="setFundAmount(100)">$100</button>
-            <button class="amount-pill active" onclick="setFundAmount(500)">$500</button>
-            <button class="amount-pill" onclick="setFundAmount(1000)">$1,000</button>
-            <button class="amount-pill" onclick="setFundAmount(5000)">$5,000</button>
-          </div>
-          <div class="form-group margin-top">
-            <label>Custom Amount ($)</label>
-            <input type="number" id="fund-amount-input" class="trade-input" value="500" oninput="updateFundCalcs()">
-          </div>
-          <div class="trade-summary margin-top">
-            <div><span>Estimated Shares</span><span id="fund-calc-shares">2.0487</span></div>
-            <div><span>Estimated Return (1 YR)</span><span class="positive" id="fund-calc-return">+$91.20</span></div>
-          </div>
-          <button class="btn-primary full-width margin-top" onclick="goToFundStep('review')">Continue to Review →</button>
+          <input type="number" class="input-dark margin-top" id="f-amt-in" value="500" style="font-size: 20px; padding: 12px;">
+          <button class="btn-submit-trade margin-top" onclick="goToFundStep('review')">Continue to Review ➔</button>
         </div>
       </section>
 
-      <!-- FUND STEP 3: REVIEW ORDER -->
       <section id="fund-flow-review" class="page-view">
-        <button class="btn-outline" onclick="goToFundStep('amount')">← Back to Amount</button>
-        <div class="modal-card-center margin-top">
+        <div class="card-dark margin-top" style="max-width: 450px; margin: 40px auto;">
           <h2>Review Order</h2>
-          <p class="text-muted" id="fund-review-target">Tesla Equity Fund</p>
-          <div class="trade-summary margin-top">
-            <div><span>Investment Amount</span><span id="fund-rev-amt">$500.00</span></div>
-            <div><span>Estimated Shares</span><span id="fund-rev-sh">2.0487</span></div>
-            <div><span>Management Fee</span><span>1.5%</span></div>
-          </div>
-          <button class="btn-primary full-width margin-top" style="background: var(--accent-green);" onclick="goToFundStep('success')">Confirm Investment</button>
+          <p class="lbl-muted margin-top">Confirm your investment into Tesla Equity Fund.</p>
+          <button class="btn-submit-trade margin-top" style="background: var(--c-green);" onclick="goToFundStep('success')">Confirm Investment</button>
         </div>
       </section>
 
-      <!-- FUND STEP 4: SUCCESS CONFIRMATION -->
       <section id="fund-flow-success" class="page-view text-center">
-        <div class="modal-card-center margin-top">
-          <div class="success-icon">✓</div>
-          <h2>Investment Confirmed!</h2>
-          <p class="text-muted margin-top">Your fund purchase has been executed successfully.</p>
-          <button class="btn-primary full-width margin-top" onclick="switchView('view-portfolio')">View Portfolio</button>
-          <button class="btn-outline full-width margin-top" onclick="switchView('view-funds')">Back to Funds</button>
+        <div class="card-dark margin-top" style="max-width: 450px; margin: 40px auto; padding: 40px;">
+          <h2 class="txt-pos">✓ Investment Confirmed!</h2>
+          <p class="lbl-muted margin-top">Your transaction has been processed successfully.</p>
+          <button class="btn-hero margin-top" onclick="switchView('view-dashboard')">Back to Dashboard</button>
         </div>
       </section>
 
-
-      <!-- =======================================
-           TRADE (BUY / SELL) FULL-SCREEN FLOW PAGES
-           ======================================= -->
-
-      <!-- TRADE STEP 1: ENTER DETAILS -->
       <section id="trade-flow-details" class="page-view">
-        <button class="btn-outline" onclick="switchView('view-trade-hub')">← Back to Trade Hub</button>
-        <div class="modal-card-center margin-top">
+        <button class="btn-card-action" onclick="switchView('view-dashboard')">← Back to Dashboard</button>
+        <div class="card-dark margin-top" style="max-width: 450px; margin: 20px auto;">
           <h2 id="trade-flow-title">Buy TSLA</h2>
-          <p class="text-muted" id="trade-asset-sub">Tesla Inc. • $248.32</p>
-          
-          <div class="trade-tabs margin-top">
-            <button class="trade-tab active" id="trade-buy-btn" onclick="setTradeAction('buy')">Buy</button>
-            <button class="trade-tab" id="trade-sell-btn" onclick="setTradeAction('sell')">Sell</button>
-          </div>
-
-          <div class="form-group margin-top">
-            <label>Shares</label>
-            <input type="number" id="trade-shares-input" class="trade-input" value="10" oninput="updateTradeCalcs()">
-          </div>
-          <div class="trade-summary margin-top">
-            <div><span>Price Per Share</span><span id="trade-price-disp">$248.32</span></div>
-            <div><span>Total Cost / Proceeds</span><strong id="trade-total-disp">$2,483.20</strong></div>
-          </div>
-          <button class="btn-primary full-width margin-top" onclick="goToTradeStep('review')">Review Order →</button>
+          <button class="btn-submit-trade margin-top" onclick="goToTradeStep('review')">Review Order ➔</button>
         </div>
       </section>
 
-      <!-- TRADE STEP 2: REVIEW ORDER -->
       <section id="trade-flow-review" class="page-view">
-        <button class="btn-outline" onclick="goToTradeStep('details')">← Back to Details</button>
-        <div class="modal-card-center margin-top">
-          <h2 id="trade-rev-title">Review Buy Order</h2>
-          <div class="trade-summary margin-top">
-            <div><span>Action</span><span id="trade-rev-action" class="positive">BUY</span></div>
-            <div><span>Shares</span><span id="trade-rev-shares">10</span></div>
-            <div><span>Total</span><strong id="trade-rev-total">$2,483.20</strong></div>
-          </div>
-          <button class="btn-primary full-width margin-top" id="trade-confirm-btn" style="background: var(--accent-green);" onclick="goToTradeStep('success')">Confirm Order</button>
+        <div class="card-dark margin-top" style="max-width: 450px; margin: 40px auto;">
+          <h2>Review Trade Order</h2>
+          <button class="btn-submit-trade margin-top" style="background: var(--c-green);" onclick="goToTradeStep('success')">Confirm Order</button>
         </div>
       </section>
 
-      <!-- TRADE STEP 3: SUCCESS CONFIRMATION -->
       <section id="trade-flow-success" class="page-view text-center">
-        <div class="modal-card-center margin-top">
-          <div class="success-icon">✓</div>
-          <h2 id="trade-succ-title">Order Executed!</h2>
-          <p class="text-muted margin-top" id="trade-succ-sub">You bought 10 shares of TSLA.</p>
-          <button class="btn-primary full-width margin-top" onclick="switchView('view-portfolio')">View Portfolio</button>
-          <button class="btn-outline full-width margin-top" onclick="switchView('view-dashboard')">Back to Dashboard</button>
+        <div class="card-dark margin-top" style="max-width: 450px; margin: 40px auto; padding: 40px;">
+          <h2 class="txt-pos">✓ Order Executed!</h2>
+          <button class="btn-hero margin-top" onclick="switchView('view-dashboard')">Back to Dashboard</button>
         </div>
       </section>
 
