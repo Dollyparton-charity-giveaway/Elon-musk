@@ -9,212 +9,718 @@
 </head>
 <body>
 
-  <!-- Sidebar -->
+  <!-- Left Sidebar (Applies across all views) -->
   <aside class="sidebar">
-    <div>
-      <div class="brand">
-        <div class="brand-logo">T E S L A</div>
-      </div>
-      <nav class="nav-list">
-        <button class="nav-item active" data-target="view-dashboard">📊 Dashboard</button>
-        <button class="nav-item" data-target="view-markets">📈 Markets</button>
-        <button class="nav-item" data-target="view-trade">🔄 Trade</button>
-        <button class="nav-item" data-target="view-portfolio">💼 Portfolio</button>
-        <button class="nav-item" data-target="view-funds">🏦 Investment Funds</button>
-        <button class="nav-item" data-target="view-assets">💎 Assets</button>
-        <button class="nav-item" data-target="view-settings">⚙️ Settings</button>
-      </nav>
+    <div class="brand">
+      <div class="brand-logo">T E S L A</div>
+      <div class="brand-sub">INVESTMENT PLATFORM</div>
+    </div>
+    <nav class="nav-list">
+      <button class="nav-item active" data-target="view-dashboard">📊 Dashboard</button>
+      <button class="nav-item" data-target="view-markets">📈 Markets</button>
+      <button class="nav-item" data-target="view-trade">🔄 Trade</button>
+      <button class="nav-item" data-target="view-portfolio">💼 Portfolio</button>
+      <button class="nav-item" data-target="view-funds">🏦 Investment Funds</button>
+      <button class="nav-item" data-target="view-assets">💎 Assets</button>
+      <button class="nav-item" data-target="view-research">🔬 Research & Insights</button>
+      <button class="nav-item" data-target="view-reports">📄 Reports</button>
+      <button class="nav-item" data-target="view-settings">⚙️ Settings</button>
+    </nav>
+    <div class="sidebar-footer">
+      <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?w=300" alt="Tesla Model S" class="car-img">
+      <p>Invest in a cleaner, smarter, more sustainable future.</p>
     </div>
   </aside>
 
-  <!-- Main Layout -->
+  <!-- Main Container -->
   <div class="layout-wrapper">
-    <!-- Global Header -->
+    <!-- Header Bar -->
     <header class="global-header">
       <div class="search-bar">
         <span>🔍</span>
         <input type="text" placeholder="Search stocks, funds, assets...">
       </div>
-      <div class="user-badge">
-        🔔 👤 Institutional Investor (VIP Access)
+      <div class="header-right">
+        <span class="status-dot">● Market Open 10:24 AM (UTC)</span>
+        <button class="icon-btn">🔔</button>
+        <div class="user-profile">
+          <div class="avatar">👤</div>
+          <div>
+            <div class="user-name">Institutional Investor</div>
+            <div class="user-tier">VIP Access</div>
+          </div>
+        </div>
       </div>
     </header>
 
+    <!-- Content Views Container -->
     <div class="content-area">
-      <!-- VIEW 1: DASHBOARD -->
+      
+      <!-- SCREEN 1: DASHBOARD -->
       <div id="view-dashboard" class="page-view active">
-        <section class="hero-banner">
-          <h1>Build Wealth Through Tomorrow's Innovation</h1>
-          <p>Invest in Tesla, AI, Clean Energy, and Space — all in one institutional platform.</p>
-          <button class="btn-primary" onclick="switchView('view-funds')">Explore Investment Funds →</button>
-        </section>
-        <div class="metrics-grid">
+        <div class="dashboard-grid">
+          <!-- Main Dashboard Column -->
+          <div class="main-col">
+            <section class="hero-banner">
+              <h1>Build Wealth Through Tomorrow's Innovation</h1>
+              <p>Invest in Tesla, AI, Clean Energy, and Space — all in one institutional platform.</p>
+              <button class="btn-primary" onclick="switchView('view-funds')">Explore Investment Funds →</button>
+            </section>
+
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <div class="metric-label">Total Portfolio Value</div>
+                <div class="metric-value">$2,487,523.16</div>
+                <div class="metric-change positive">▲ +12.48% (24h)</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-label">Total Gain/Loss</div>
+                <div class="metric-value positive">$276,982.41</div>
+                <div class="metric-change positive">▲ +12.53% (All Time)</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-label">Available Balance</div>
+                <div class="metric-value">$502,316.78</div>
+                <button class="btn-sm">Deposit</button>
+              </div>
+            </div>
+
+            <div class="section-card margin-top">
+              <div class="section-header">
+                <h3>Portfolio Performance</h3>
+                <div class="time-pills">
+                  <button class="pill">1D</button>
+                  <button class="pill">1W</button>
+                  <button class="pill active">1M</button>
+                  <button class="pill">3M</button>
+                  <button class="pill">6M</button>
+                  <button class="pill">1Y</button>
+                  <button class="pill">ALL</button>
+                </div>
+              </div>
+              <div class="chart-container"><canvas id="dashChart"></canvas></div>
+            </div>
+
+            <div class="section-header margin-top">
+              <h3>Investment Funds</h3>
+              <a href="#" class="link-btn" onclick="switchView('view-funds')">View All →</a>
+            </div>
+
+            <div class="funds-grid-4">
+              <div class="fund-card">
+                <div class="fund-title">Tesla Equity Fund</div>
+                <div class="fund-sub">Direct exposure to Tesla's growth</div>
+                <div class="fund-val-wrap">
+                  <span class="positive">+18.24% YTD</span>
+                  <span class="fund-val">$842,316.42</span>
+                </div>
+                <button class="btn-outline fund-invest-btn" data-fund="tesla">Invest Now</button>
+              </div>
+              <div class="fund-card">
+                <div class="fund-title">AI Innovation Fund</div>
+                <div class="fund-sub">Top AI companies & robotics</div>
+                <div class="fund-val-wrap">
+                  <span class="positive">+14.62% YTD</span>
+                  <span class="fund-val">$637,428.17</span>
+                </div>
+                <button class="btn-outline">Invest Now</button>
+              </div>
+              <div class="fund-card">
+                <div class="fund-title">Clean Energy Fund</div>
+                <div class="fund-sub">Renewable energy & sustainability</div>
+                <div class="fund-val-wrap">
+                  <span class="positive">+10.37% YTD</span>
+                  <span class="fund-val">$502,765.03</span>
+                </div>
+                <button class="btn-outline">Invest Now</button>
+              </div>
+              <div class="fund-card">
+                <div class="fund-title">Space Exploration Fund</div>
+                <div class="fund-sub">Space tech & next-gen aerospace</div>
+                <div class="fund-val-wrap">
+                  <span class="positive">+16.80% YTD</span>
+                  <span class="fund-val">$420,013.54</span>
+                </div>
+                <button class="btn-outline">Invest Now</button>
+              </div>
+            </div>
+
+            <div class="split-layout margin-top">
+              <div class="section-card">
+                <h3>Portfolio Allocation</h3>
+                <div class="donut-flex">
+                  <div class="donut-val">$2.49M<br><small>Total Value</small></div>
+                  <ul class="alloc-list">
+                    <li><span class="dot tesla"></span> Tesla (TSLA) <span>34.2%</span></li>
+                    <li><span class="dot ai"></span> AI Innovation Fund <span>25.6%</span></li>
+                    <li><span class="dot clean"></span> Clean Energy Fund <span>20.3%</span></li>
+                    <li><span class="dot space"></span> Space Exploration <span>14.7%</span></li>
+                    <li><span class="dot cash"></span> Cash & Others <span>5.2%</span></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="section-card">
+                <div class="section-header">
+                  <h3>Transaction History</h3>
+                  <a href="#" class="link-btn">View All →</a>
+                </div>
+                <table class="data-table">
+                  <tr><th>Date</th><th>Type</th><th>Asset</th><th>Amount</th><th>Status</th></tr>
+                  <tr><td>Aug 28, 2026</td><td class="positive">Buy</td><td>TSLA</td><td>$10,000.00</td><td class="tag-done">Completed</td></tr>
+                  <tr><td>Aug 27, 2026</td><td class="positive">Buy</td><td>NVDA</td><td>$5,000.00</td><td class="tag-done">Completed</td></tr>
+                  <tr><td>Aug 25, 2026</td><td class="negative">Sell</td><td>AAPL</td><td>$3,500.00</td><td class="tag-done">Completed</td></tr>
+                  <tr><td>Aug 22, 2026</td><td class="positive">Dividend</td><td>Tesla Fund</td><td>$1,250.00</td><td class="tag-done">Completed</td></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Dashboard Column -->
+          <div class="side-col">
+            <div class="section-card">
+              <div class="section-header">
+                <h3>Market Watch</h3>
+                <a href="#" class="link-btn">View All →</a>
+              </div>
+              <div class="tab-pills-sm">
+                <button class="pill active">Stocks</button>
+                <button class="pill">ETFs</button>
+                <button class="pill">Crypto</button>
+                <button class="pill">Commodities</button>
+              </div>
+              <div class="stock-list margin-top">
+                <div class="stock-item">
+                  <div class="stock-symbol"><span class="badge tsla">T</span> TSLA<br><small>Tesla Inc.</small></div>
+                  <div class="stock-price">$187.45<br><small class="positive">▲ +4.32%</small></div>
+                </div>
+                <div class="stock-item">
+                  <div class="stock-symbol"><span class="badge nvda">N</span> NVDA<br><small>NVIDIA Corp.</small></div>
+                  <div class="stock-price">$142.76<br><small class="positive">▲ +3.21%</small></div>
+                </div>
+                <div class="stock-item">
+                  <div class="stock-symbol"><span class="badge aapl">A</span> AAPL<br><small>Apple Inc.</small></div>
+                  <div class="stock-price">$229.13<br><small class="positive">▲ +1.87%</small></div>
+                </div>
+                <div class="stock-item">
+                  <div class="stock-symbol"><span class="badge msft">M</span> MSFT<br><small>Microsoft Corp.</small></div>
+                  <div class="stock-price">$410.32<br><small class="positive">▲ +1.45%</small></div>
+                </div>
+                <div class="stock-item">
+                  <div class="stock-symbol"><span class="badge amzn">a</span> AMZN<br><small>Amazon.com Inc.</small></div>
+                  <div class="stock-price">$214.06<br><small class="positive">▲ +2.13%</small></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="section-card margin-top">
+              <h3>Quick Trade</h3>
+              <div class="trade-tabs margin-top">
+                <button class="trade-tab active">Buy</button>
+                <button class="trade-tab">Sell</button>
+              </div>
+              <div class="form-group margin-top">
+                <label>Asset</label>
+                <select class="trade-input"><option>Tesla (TSLA)</option></select>
+              </div>
+              <div class="form-group">
+                <label>Amount</label>
+                <input type="text" class="trade-input" value="$ 1,000">
+              </div>
+              <div class="quick-amounts">
+                <button>$1K</button><button>$5K</button><button>$10K</button><button>$50K</button>
+              </div>
+              <button class="btn-primary full-width margin-top" style="background: var(--accent-green);">Buy TSLA</button>
+              <div class="trade-summary margin-top">
+                <div><span>Estimated Shares</span><span>5.32</span></div>
+                <div><span>Est. Price</span><span>$187.45</span></div>
+                <div><span>Est. Total</span><span>$1,000.00</span></div>
+              </div>
+            </div>
+
+            <div class="section-card margin-top">
+              <div class="section-header">
+                <h3>Recent News & Insights</h3>
+                <a href="#" class="link-btn">View All →</a>
+              </div>
+              <div class="news-list margin-top">
+                <div class="news-item">
+                  <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=100" alt="News">
+                  <div>
+                    <h4>Tesla Announces Next-Gen Battery Technology</h4>
+                    <p>2h ago • Tesla News</p>
+                  </div>
+                </div>
+                <div class="news-item">
+                  <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100" alt="News">
+                  <div>
+                    <h4>AI Investments Drive Strong Q3 Growth</h4>
+                    <p>4h ago • Market Insights</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="banner-card margin-top">
+              <h3>👑 Institutional Access</h3>
+              <ul>
+                <li>✓ Exclusive Investment Opportunities</li>
+                <li>✓ Dedicated Account Manager</li>
+                <li>✓ Advanced Analytics & Research</li>
+                <li>✓ Priority Withdrawals</li>
+              </ul>
+              <button class="btn-outline full-width margin-top">Upgrade to Institutional</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 2: MARKETS -->
+      <div id="view-markets" class="page-view">
+        <div class="split-layout">
+          <div class="main-col">
+            <div class="section-header">
+              <h2>Market Overview</h2>
+              <button class="pill">Watchlist ▾</button>
+            </div>
+            <div class="tab-pills-sm margin-top">
+              <button class="pill active">Stocks</button>
+              <button class="pill">ETFs</button>
+              <button class="pill">Crypto</button>
+              <button class="pill">Commodities</button>
+              <button class="pill">Forex</button>
+            </div>
+            <div class="metrics-grid margin-top">
+              <div class="metric-card">
+                <div class="metric-label">S&P 500</div>
+                <div class="metric-value">5,497.21</div>
+                <div class="metric-change positive">▲ +1.21%</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-label">NASDAQ</div>
+                <div class="metric-value">17,117.76</div>
+                <div class="metric-change positive">▲ +1.24%</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-label">DOW JONES</div>
+                <div class="metric-value">40,823.17</div>
+                <div class="metric-change positive">▲ +1.12%</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-label">BTC</div>
+                <div class="metric-value">$61,420.20</div>
+                <div class="metric-change positive">▲ +2.34%</div>
+              </div>
+            </div>
+
+            <h3 class="margin-top">Top Gainers</h3>
+            <table class="data-table margin-top">
+              <tr><th>Symbol</th><th>Price</th><th>24h Change</th><th>24h Volume</th></tr>
+              <tr><td><strong>TSLA</strong> Tesla Inc.</td><td>$187.45</td><td class="positive">+4.32%</td><td>$18.7M</td></tr>
+              <tr><td><strong>NVDA</strong> NVIDIA Corp.</td><td>$142.76</td><td class="positive">+3.21%</td><td>$12.4M</td></tr>
+              <tr><td><strong>AAPL</strong> Apple Inc.</td><td>$229.13</td><td class="positive">+1.87%</td><td>$10.1M</td></tr>
+              <tr><td><strong>MSFT</strong> Microsoft Corp.</td><td>$410.32</td><td class="positive">+1.45%</td><td>$9.8M</td></tr>
+              <tr><td><strong>AMZN</strong> Amazon.com Inc.</td><td>$214.06</td><td class="positive">+2.13%</td><td>$8.5M</td></tr>
+              <tr><td><strong>GOOGL</strong> Alphabet Inc.</td><td>$178.24</td><td class="positive">+1.92%</td><td>$7.9M</td></tr>
+            </table>
+
+            <div class="section-card margin-top">
+              <div class="section-header">
+                <h3>Market News & Insights</h3>
+                <a href="#" class="link-btn">View All →</a>
+              </div>
+              <div class="news-list margin-top">
+                <div class="news-item">
+                  <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=100" alt="News">
+                  <div>
+                    <h4>Tesla Announces Next-Gen Battery Technology</h4>
+                    <p>2h ago • Tesla News</p>
+                  </div>
+                </div>
+                <div class="news-item">
+                  <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=100" alt="News">
+                  <div>
+                    <h4>AI Investments Drive Strong Q3 Growth</h4>
+                    <p>4h ago • Market Insights</p>
+                  </div>
+                </div>
+                <div class="news-item">
+                  <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=100" alt="News">
+                  <div>
+                    <h4>Clean Energy Fund Hits 15% Returns YTD</h4>
+                    <p>6h ago • Investment News</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="side-col">
+            <div class="section-card">
+              <h3>TSLA</h3>
+              <p>Tesla Inc.</p>
+              <div class="metric-value positive margin-top">$187.45 <small>▲ +4.32%</small></div>
+              <div class="chart-container-sm margin-top"><canvas id="tslaMiniChart"></canvas></div>
+              <div class="stock-details-grid margin-top">
+                <div><span>Open</span><strong>$179.22</strong></div>
+                <div><span>High</span><strong>$188.76</strong></div>
+                <div><span>Low</span><strong>$176.34</strong></div>
+                <div><span>Volume</span><strong>48.2M</strong></div>
+                <div><span>Market Cap</span><strong>$595.7B</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 3: TRADE -->
+      <div id="view-trade" class="page-view">
+        <div class="split-layout">
+          <div class="main-col">
+            <h2>Trade</h2>
+            <div class="section-card margin-top">
+              <div class="trade-tabs">
+                <button class="trade-tab active">Buy</button>
+                <button class="trade-tab">Sell</button>
+              </div>
+              <div class="form-group margin-top">
+                <label>Asset</label>
+                <select class="trade-input"><option>Tesla (TSLA)</option></select>
+              </div>
+              <div class="form-group">
+                <label>Order Type</label>
+                <select class="trade-input"><option>Market</option><option>Limit</option></select>
+              </div>
+              <div class="form-group">
+                <label>Amount</label>
+                <input type="text" class="trade-input" value="$ 1,000">
+              </div>
+              <div class="quick-amounts">
+                <button>25%</button><button>50%</button><button>75%</button><button>100%</button>
+              </div>
+              <div class="trade-summary margin-top">
+                <div><span>Estimated Shares</span><span>5.35</span></div>
+              </div>
+              <button class="btn-primary full-width margin-top" style="background: var(--accent-green);">Review Order</button>
+            </div>
+
+            <div class="section-card margin-top">
+              <h3>Order Book</h3>
+              <table class="data-table margin-top">
+                <tr><th>Bid Size</th><th>Bid Price</th><th>Ask Price</th><th>Ask Size</th></tr>
+                <tr><td>1,200</td><td class="positive">$187.42</td><td class="negative">$187.50</td><td>1,100</td></tr>
+                <tr><td>2,450</td><td class="positive">$187.40</td><td class="negative">$187.52</td><td>1,850</td></tr>
+                <tr><td>3,120</td><td class="positive">$187.38</td><td class="negative">$187.55</td><td>2,340</td></tr>
+                <tr><td>4,560</td><td class="positive">$187.35</td><td class="negative">$187.60</td><td>3,210</td></tr>
+              </table>
+            </div>
+
+            <div class="section-card margin-top">
+              <h3>Recent Trades</h3>
+              <table class="data-table margin-top">
+                <tr><th>Time</th><th>Price</th><th>Size</th></tr>
+                <tr><td>10:24:32</td><td class="positive">$187.42</td><td>100</td></tr>
+                <tr><td>10:24:28</td><td class="negative">$187.40</td><td>50</td></tr>
+                <tr><td>10:24:21</td><td class="positive">$187.38</td><td>200</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="side-col">
+            <div class="section-card">
+              <h3>TSLA - Tesla Inc.</h3>
+              <div class="metric-value positive margin-top">$187.45 <small>▲ +4.32%</small></div>
+              <div class="chart-container margin-top"><canvas id="tradeChart"></canvas></div>
+              <div class="stock-details-grid margin-top">
+                <div><span>Open</span><strong>$179.22</strong></div>
+                <div><span>High</span><strong>$188.76</strong></div>
+                <div><span>Low</span><strong>$176.34</strong></div>
+                <div><span>Volume</span><strong>48.2M</strong></div>
+                <div><span>Market Cap</span><strong>$595.7B</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCREEN 4: PORTFOLIO -->
+      <div id="view-portfolio" class="page-view">
+        <h2>Portfolio</h2>
+        <div class="metrics-grid margin-top">
           <div class="metric-card">
-            <div class="metric-label">Total Portfolio Value</div>
+            <div class="metric-label">Total Value</div>
             <div class="metric-value">$2,487,523.16</div>
-            <div class="metric-change">▲ +12.48% (24h)</div>
+            <div class="metric-change positive">▲ +12.48% (24h)</div>
           </div>
           <div class="metric-card">
             <div class="metric-label">Total Gain/Loss</div>
-            <div class="metric-value" style="color: var(--accent-green);">$276,982.41</div>
-            <div class="metric-change">▲ +12.53% (All Time)</div>
+            <div class="metric-value positive">+$276,982.41</div>
+            <div class="metric-change positive">▲ +12.53% (All Time)</div>
           </div>
         </div>
-      </div>
 
-      <!-- VIEW 2: MARKETS -->
-      <div id="view-markets" class="page-view">
-        <h2>Market Overview</h2>
-        <div class="metrics-grid" style="margin-top: 16px;">
-          <div class="metric-card">
-            <div class="metric-label">S&P 500</div>
-            <div class="metric-value" style="font-size: 16px;">5,497.21 <span class="metric-change">▲ 1.21%</span></div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">NASDAQ</div>
-            <div class="metric-value" style="font-size: 16px;">17,117.76 <span class="metric-change">▲ 1.24%</span></div>
-          </div>
-          <div class="metric-card">
-            <div class="metric-label">DOW JONES</div>
-            <div class="metric-value" style="font-size: 16px;">40,823.17 <span class="metric-change">▲ 1.12%</span></div>
-          </div>
+        <div class="section-card margin-top">
+          <div class="chart-container"><canvas id="portfolioChart"></canvas></div>
         </div>
-        <h3 style="margin-top: 24px;">Top Gainers</h3>
-        <table class="data-table">
-          <tr><th>Symbol</th><th>Price</th><th>Change</th></tr>
-          <tr><td><strong>TSLA</strong> Tesla Inc.</td><td>$187.45</td><td style="color:var(--accent-green)">+4.32%</td></tr>
-          <tr><td><strong>NVDA</strong> NVIDIA Corp.</td><td>$142.76</td><td style="color:var(--accent-green)">+3.21%</td></tr>
-        </table>
-      </div>
 
-      <!-- VIEW 3: TRADE -->
-      <div id="view-trade" class="page-view">
-        <h2>Trade</h2>
-        <div class="split-layout">
-          <div class="trade-box">
-            <div class="trade-tabs">
-              <button class="trade-tab active">Buy</button>
-              <button class="trade-tab">Sell</button>
-            </div>
-            <div class="metric-label" style="margin-top:12px;">Asset</div>
-            <input type="text" class="trade-input" value="Tesla (TSLA)">
-            <div class="metric-label">Order Type</div>
-            <input type="text" class="trade-input" value="Market">
-            <div class="metric-label">Amount</div>
-            <input type="text" class="trade-input" value="$ 1,000">
-            <button class="btn-primary" style="width: 100%; background: var(--accent-green);">Review Order</button>
-          </div>
-          <div class="order-book section-card">
-            <h3>Order Book</h3>
-            <table class="data-table">
-              <tr><th>Bid Size</th><th>Bid Price</th><th>Ask Price</th><th>Ask Size</th></tr>
-              <tr><td>1,200</td><td style="color:var(--accent-green)">$187.42</td><td style="color:var(--accent-red)">$187.50</td><td>1,100</td></tr>
-              <tr><td>2,450</td><td style="color:var(--accent-green)">$187.40</td><td style="color:var(--accent-red)">$187.52</td><td>1,850</td></tr>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- VIEW 4: PORTFOLIO -->
-      <div id="view-portfolio" class="page-view">
-        <h2>Portfolio</h2>
-        <section class="section-card" style="margin-top: 16px;">
+        <div class="section-card margin-top">
           <h3>Holdings</h3>
-          <table class="data-table">
+          <table class="data-table margin-top">
             <tr><th>Asset</th><th>Shares</th><th>Avg. Cost</th><th>Current Price</th><th>Market Value</th><th>P/L</th></tr>
-            <tr><td>TSLA</td><td>12.5</td><td>$162.34</td><td>$187.45</td><td>$2,343.13</td><td style="color:var(--accent-green)">+15.42%</td></tr>
-            <tr><td>NVDA</td><td>8.2</td><td>$128.76</td><td>$142.76</td><td>$1,170.59</td><td style="color:var(--accent-green)">+10.91%</td></tr>
-            <tr><td>AAPL</td><td>15.0</td><td>$201.32</td><td>$229.13</td><td>$3,436.95</td><td style="color:var(--accent-green)">+13.79%</td></tr>
+            <tr><td><strong>TSLA</strong></td><td>12.5</td><td>$162.34</td><td>$187.45</td><td>$2,343.13</td><td class="positive">+15.42%</td></tr>
+            <tr><td><strong>NVDA</strong></td><td>8.2</td><td>$128.76</td><td>$142.76</td><td>$1,170.59</td><td class="positive">+10.91%</td></tr>
+            <tr><td><strong>AAPL</strong></td><td>15.0</td><td>$201.32</td><td>$229.13</td><td>$3,436.95</td><td class="positive">+13.79%</td></tr>
+            <tr><td><strong>MSFT</strong></td><td>10.0</td><td>$370.21</td><td>$410.32</td><td>$4,103.20</td><td class="positive">+10.81%</td></tr>
+            <tr><td><strong>AMZN</strong></td><td>8.0</td><td>$188.45</td><td>$214.06</td><td>$1,712.48</td><td class="positive">+13.56%</td></tr>
           </table>
-        </section>
+        </div>
+
+        <div class="section-card margin-top">
+          <div class="section-header">
+            <h3>Recent Activity</h3>
+            <a href="#" class="link-btn">View All →</a>
+          </div>
+          <div class="activity-list margin-top">
+            <div class="activity-item">
+              <div><strong>Bought Tesla (TSLA)</strong><br><small>2.5 shares</small></div>
+              <div>Aug 28, 2026<br><strong>$466.55</strong></div>
+            </div>
+            <div class="activity-item">
+              <div><strong>Dividend Received</strong><br><small>Aug 25, 2026</small></div>
+              <div class="positive">$125.40</div>
+            </div>
+            <div class="activity-item">
+              <div><strong>Sold Apple (AAPL)</strong><br><small>1.0 share</small></div>
+              <div>Aug 22, 2026<br><strong>$229.13</strong></div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- VIEW 5: INVESTMENT FUNDS -->
+      <!-- SCREEN 5: INVESTMENT FUNDS -->
       <div id="view-funds" class="page-view">
         <h2>Investment Funds</h2>
-        <div class="time-pills" style="margin: 16px 0;">
+        <p class="text-muted">Diversify your portfolio with expertly managed funds focused on the world's most innovative industries.</p>
+        <div class="time-pills margin-top">
           <button class="pill active">All Funds</button>
           <button class="pill">Equity</button>
           <button class="pill">Thematic</button>
           <button class="pill">ESG</button>
         </div>
-        <div class="funds-grid">
-          <div class="fund-card">
-            <div class="fund-body">
-              <div class="fund-title">Tesla Equity Fund</div>
-              <div class="fund-metrics" style="margin-top: 10px;">
-                <span style="color: var(--accent-green);">+18.24% YTD</span>
-                <span style="font-size: 16px; font-weight: bold;">$842,316.42</span>
+
+        <div class="funds-grid-2 margin-top">
+          <div class="fund-card-lg">
+            <div class="fund-header-bg tesla-bg"></div>
+            <div class="fund-card-body">
+              <h3>Tesla Equity Fund</h3>
+              <p>Direct exposure to Tesla's growth</p>
+              <div class="fund-metrics-lg margin-top">
+                <div><span class="positive">+18.24%</span><br><small>YTD</small></div>
+                <div><strong>$842,316.42</strong><br><small>Fund Value</small></div>
               </div>
-              <button class="btn-outline fund-invest-btn" data-fund="tesla" style="margin-top: 10px;">Invest Now</button>
+              <button class="btn-primary full-width margin-top fund-invest-btn" data-fund="tesla">Invest Now</button>
             </div>
           </div>
-          <div class="fund-card">
-            <div class="fund-body">
-              <div class="fund-title">AI Innovation Fund</div>
-              <div class="fund-metrics" style="margin-top: 10px;">
-                <span style="color: var(--accent-green);">+14.62% YTD</span>
-                <span style="font-size: 16px; font-weight: bold;">$637,428.17</span>
+
+          <div class="fund-card-lg">
+            <div class="fund-header-bg ai-bg"></div>
+            <div class="fund-card-body">
+              <h3>AI Innovation Fund</h3>
+              <p>Top AI companies & robotics</p>
+              <div class="fund-metrics-lg margin-top">
+                <div><span class="positive">+14.62%</span><br><small>YTD</small></div>
+                <div><strong>$637,428.17</strong><br><small>Fund Value</small></div>
               </div>
-              <button class="btn-outline" style="margin-top: 10px;">Invest Now</button>
+              <button class="btn-primary full-width margin-top">Invest Now</button>
+            </div>
+          </div>
+
+          <div class="fund-card-lg margin-top">
+            <div class="fund-header-bg clean-bg"></div>
+            <div class="fund-card-body">
+              <h3>Clean Energy Fund</h3>
+              <p>Renewable energy & sustainability</p>
+              <div class="fund-metrics-lg margin-top">
+                <div><span class="positive">+10.37%</span><br><small>YTD</small></div>
+                <div><strong>$502,765.03</strong><br><small>Fund Value</small></div>
+              </div>
+              <button class="btn-primary full-width margin-top">Invest Now</button>
+            </div>
+          </div>
+
+          <div class="fund-card-lg margin-top">
+            <div class="fund-header-bg space-bg"></div>
+            <div class="fund-card-body">
+              <h3>Space Exploration Fund</h3>
+              <p>Space tech & next-gen aerospace</p>
+              <div class="fund-metrics-lg margin-top">
+                <div><span class="positive">+16.80%</span><br><small>YTD</small></div>
+                <div><strong>$420,013.54</strong><br><small>Fund Value</small></div>
+              </div>
+              <button class="btn-primary full-width margin-top">Invest Now</button>
             </div>
           </div>
         </div>
+
+        <div class="banner-strip margin-top">
+          <div>🛡️ Institutional Grade Investments</div>
+          <div>📉 Lower Fees</div>
+          <div>🔍 Higher Transparency</div>
+          <div>🎧 Dedicated Support</div>
+        </div>
       </div>
 
-      <!-- VIEW 6: ASSETS -->
+      <!-- SCREEN 6: ASSETS -->
       <div id="view-assets" class="page-view">
         <h2>Assets</h2>
-        <div class="split-layout" style="margin-top: 16px;">
+        <div class="metric-card margin-top">
+          <div class="metric-label">Total Assets</div>
+          <div class="metric-value">$2,487,523.16</div>
+          <div class="metric-change positive">▲ +12.48% (24h)</div>
+        </div>
+
+        <div class="tab-pills-sm margin-top">
+          <button class="pill active">Overview</button>
+          <button class="pill">Allocation</button>
+          <button class="pill">Transactions</button>
+        </div>
+
+        <div class="split-layout margin-top">
           <div class="section-card text-center">
-            <h3>Total Assets</h3>
-            <div style="font-size: 28px; font-weight: bold; margin: 10px 0;">$2,487,523.16</div>
-            <div class="donut-placeholder">Asset Allocation Chart Area</div>
+            <div class="donut-val-lg">$2.49M<br><small>Total Assets</small></div>
+            <ul class="alloc-list margin-top text-left">
+              <li><span class="dot tesla"></span> Equities <span>62.4% ($1,552,214.42)</span></li>
+              <li><span class="dot ai"></span> Investment Funds <span>26.8% ($666,656.20)</span></li>
+              <li><span class="dot clean"></span> Cash <span>7.1% ($176,614.14)</span></li>
+              <li><span class="dot space"></span> Crypto <span>3.7% ($92,038.40)</span></li>
+            </ul>
           </div>
+
           <div class="section-card">
             <h3>Asset Allocation</h3>
-            <table class="data-table">
-              <tr><td>TSLA</td><td>34.2%</td><td>$842,316.42</td></tr>
-              <tr><td>NVDA</td><td>18.7%</td><td>$464,310.17</td></tr>
+            <table class="data-table margin-top">
+              <tr><th>Asset</th><th>Allocation</th><th>Value</th></tr>
+              <tr><td>Tesla (TSLA)</td><td>34.2%</td><td>$842,316.42</td></tr>
+              <tr><td>NVIDIA (NVDA)</td><td>18.7%</td><td>$464,310.17</td></tr>
+              <tr><td>Apple (AAPL)</td><td>13.4%</td><td>$333,681.22</td></tr>
+              <tr><td>Microsoft (MSFT)</td><td>12.6%</td><td>$313,627.80</td></tr>
+              <tr><td>Amazon (AMZN)</td><td>8.9%</td><td>$221,504.16</td></tr>
+              <tr><td>Others</td><td>12.2%</td><td>$303,183.39</td></tr>
             </table>
           </div>
         </div>
       </div>
 
-      <!-- VIEW 7: SETTINGS -->
+      <!-- SCREEN 7: SETTINGS -->
       <div id="view-settings" class="page-view">
         <h2>Settings</h2>
-        <div class="split-layout" style="margin-top: 16px;">
-          <div class="section-card">
-            <h3>Account</h3>
-            <div class="market-item"><span>Profile Information</span><span>></span></div>
-            <div class="market-item"><span>Account Type</span><span style="color:var(--text-muted)">VIP Access</span></div>
-            <h3 style="margin-top: 20px;">Security</h3>
-            <div class="market-item"><span>Two-Factor Auth</span><span style="color:var(--accent-green)">Enabled</span></div>
+        <div class="split-layout margin-top">
+          <div class="main-col">
+            <div class="section-card">
+              <h3>Account</h3>
+              <div class="setting-item margin-top"><span>Profile Information</span><span>Institutional Investor ›</span></div>
+              <div class="setting-item"><span>Account Type</span><span class="positive">VIP Access ›</span></div>
+              <div class="setting-item"><span>Email Address</span><span>investor@tesla-platform.com ›</span></div>
+              <div class="setting-item"><span>Phone Number</span><span>+1 (555) 123-4567 ›</span></div>
+            </div>
+
+            <div class="section-card margin-top">
+              <h3>Security</h3>
+              <div class="setting-item margin-top"><span>Two-Factor Authentication</span><span class="positive">Enabled ›</span></div>
+              <div class="setting-item"><span>Login Password</span><span>Change ›</span></div>
+              <div class="setting-item"><span>Biometric Login</span><span class="positive">Enabled ›</span></div>
+            </div>
+
+            <div class="section-card margin-top">
+              <h3>Preferences</h3>
+              <div class="setting-item margin-top"><span>Notifications</span><span>Manage ›</span></div>
+              <div class="setting-item"><span>Language</span><span>English ›</span></div>
+              <div class="setting-item"><span>Theme</span><span>Dark Mode ›</span></div>
+            </div>
+
+            <div class="section-card margin-top">
+              <h3>Support</h3>
+              <div class="setting-item margin-top"><span>Help Center</span><span>›</span></div>
+              <div class="setting-item"><span>Contact Support</span><span>›</span></div>
+              <div class="setting-item negative"><span>Log Out</span><span>›</span></div>
+            </div>
           </div>
-          <div class="section-card text-center" style="border: 1px solid var(--accent-blue);">
-            <h3>Institutional Access</h3>
-            <p style="color: var(--text-muted); font-size: 12px; margin: 12px 0;">Unlock exclusive features and institutional-grade opportunities.</p>
-            <button class="btn-outline" style="border-color: var(--accent-blue); color: var(--accent-blue);">Upgrade to Institutional</button>
+
+          <div class="side-col">
+            <div class="banner-card text-center">
+              <h3>👑 Institutional Access</h3>
+              <p class="text-muted margin-top">Unlock exclusive features and institutional-grade opportunities.</p>
+              <ul class="text-left margin-top">
+                <li>✓ Dedicated Account Manager</li>
+                <li>✓ Advanced Analytics & Research</li>
+                <li>✓ Priority Withdrawals</li>
+                <li>✓ Lower Trading Fees</li>
+              </ul>
+              <button class="btn-primary full-width margin-top">Upgrade to Institutional</button>
+            </div>
+            <div class="tesla-logo-large text-center margin-top">
+              <h1>T E S L A</h1>
+              <p>INVEST • INNOVATE • BUILD</p>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- VIEW 8: TESLA EQUITY FUND DETAIL -->
+      <!-- SCREEN 8: TESLA EQUITY FUND DETAIL -->
       <div id="view-fund-detail" class="page-view">
-        <button class="btn-outline" style="width: auto; margin-bottom: 16px;" onclick="switchView('view-funds')">← Back to Funds</button>
-        <section class="hero-banner" style="background: linear-gradient(90deg, #111e30 0%, #050b14 100%);">
-          <h1 style="font-size: 20px;">Tesla Equity Fund</h1>
-          <p>Direct exposure to Tesla's growth.</p>
-          <div style="font-size: 28px; font-weight: bold; color: var(--accent-green); margin-top: 12px;">+18.24% YTD</div>
-          <button class="btn-primary" style="margin-top: 16px;">Invest Now</button>
-        </section>
-        <div class="section-card">
-          <h3>Performance</h3>
-          <div style="height: 200px; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--border-color); color: var(--text-muted);">
-            [ Detailed Fund Chart Renders Here ]
+        <button class="btn-outline margin-bottom" onclick="switchView('view-funds')">← Back to Funds</button>
+        <div class="fund-detail-hero">
+          <div>
+            <h1>Tesla Equity Fund</h1>
+            <p>Direct exposure to Tesla's growth</p>
+            <div class="metric-value positive margin-top">+18.24% YTD</div>
+            <div class="fund-val-lg margin-top">$842,316.42<br><small>Net Asset Value (NAV)</small></div>
+          </div>
+          <div>
+            <button class="btn-primary btn-lg">Invest Now</button>
           </div>
         </div>
+
+        <div class="tab-pills-sm margin-top">
+          <button class="pill active">Overview</button>
+          <button class="pill">Performance</button>
+          <button class="pill">Holdings</button>
+          <button class="pill">Details</button>
+        </div>
+
+        <div class="section-card margin-top">
+          <h3>Fund Overview</h3>
+          <p class="margin-top text-muted">The Tesla Equity Fund gives you direct exposure to Tesla's growth story, from electric vehicles to energy storage, AI, and robotics.</p>
+          <div class="metrics-grid margin-top">
+            <div class="metric-card"><span>Equity Type</span><strong>Equity Fund</strong></div>
+            <div class="metric-card"><span>Risk Level</span><strong class="positive">High Growth</strong></div>
+            <div class="metric-card"><span>Recommended Horizon</span><strong>5+ Years</strong></div>
+          </div>
+        </div>
+
+        <div class="section-card margin-top">
+          <div class="section-header">
+            <h3>Performance</h3>
+            <div class="time-pills">
+              <button class="pill">1M</button>
+              <button class="pill">3M</button>
+              <button class="pill">6M</button>
+              <button class="pill">1Y</button>
+              <button class="pill active">ALL (+18.24%)</button>
+            </div>
+          </div>
+          <div class="chart-container margin-top"><canvas id="teslaFundChart"></canvas></div>
+          <div class="stock-details-grid margin-top">
+            <div><span>NAV</span><strong>$842,316.42</strong></div>
+            <div><span>Expense Ratio</span><strong>0.75%</strong></div>
+            <div><span>Min. Investment</span><strong>$1,000</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Generic View Fallback for Research/Reports -->
+      <div id="view-generic" class="page-view">
+        <h2 id="generic-title">Section View</h2>
+        <p class="text-muted margin-top">This section content is coming soon.</p>
       </div>
 
     </div>
