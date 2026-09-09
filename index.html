@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tesla Investment Platform | Institutional & Personal</title>
+  <title>Tesla Investment Platform | Global Terminal</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-  <!-- AUTH / LANDING OVERLAY (Login & Register) -->
+  <!-- AUTHENTICATION OVERLAY -->
   <div id="auth-modal-overlay" class="modal-overlay">
     <div class="auth-card">
       <div class="brand-logo justify-center margin-bottom">
-        <svg class="tesla-t" viewBox="0 0 342 35" fill="none"><path d="M0 .1a38.4 38.4 0 0 1 34.2 0l136.8 68.4L307.8.1A38.4 38.4 0 0 1 342 .1v12L171 80.5 0 12.1V.1z" fill="#e51937"/></svg>
+        <svg class="tesla-t-logo" viewBox="0 0 342 35"><path fill="#E51937" d="M0 .1a38.4 38.4 0 0 1 34.2 0l136.8 68.4L307.8.1A38.4 38.4 0 0 1 342 .1v12L171 80.5 0 12.1V.1z"/></svg>
         <span>TESLA</span>
       </div>
       <div class="auth-tabs">
@@ -25,7 +25,7 @@
       <form id="form-login" onsubmit="handleAuth(event, 'login')">
         <div class="form-group">
           <label>Email Address</label>
-          <input type="email" id="login-email" class="input-dark-lg" placeholder="investor@tesla.com" required value="investor@tesla.com">
+          <input type="email" id="login-email" class="input-dark-lg" placeholder="investor@tesla.com" required value="sister@family.com">
         </div>
         <div class="form-group">
           <label>Password</label>
@@ -35,14 +35,14 @@
           <label><input type="checkbox" checked> Remember Me</label>
           <a href="#" class="link-blue">Forgot Password?</a>
         </div>
-        <button type="submit" class="btn-primary-lg margin-top-lg">Sign In to Workspace ➔</button>
+        <button type="submit" class="btn-primary-lg margin-top-lg">Sign In to Terminal ➔</button>
       </form>
 
       <!-- Register Form -->
       <form id="form-register" class="hidden" onsubmit="handleAuth(event, 'register')">
         <div class="form-group">
-          <label>Full Name</label>
-          <input type="text" id="reg-name" class="input-dark-lg" placeholder="e.g. Sarah Musk" required>
+          <label>Full Investor Name</label>
+          <input type="text" id="reg-name" class="input-dark-lg" placeholder="e.g. Sarah Johnson" required>
         </div>
         <div class="form-group">
           <label>Email Address</label>
@@ -55,12 +55,48 @@
         <div class="form-group">
           <label>Account Category</label>
           <select id="reg-type" class="input-dark-lg">
-            <option value="Personal Account">Personal Investor (For Family & Individuals)</option>
-            <option value="Institutional VIP">Institutional / VIP Account ($50k+ Horizon)</option>
+            <option value="Personal Account">Personal Account (Individual / Family)</option>
+            <option value="Institutional VIP">Institutional VIP Access ($50k+ Horizon)</option>
           </select>
         </div>
         <button type="submit" class="btn-primary-lg margin-top-lg">Complete Registration ➔</button>
       </form>
+    </div>
+  </div>
+
+  <!-- DEPOSIT & PAYMENT METHOD MODAL -->
+  <div id="deposit-modal" class="modal-overlay hidden">
+    <div class="order-sheet-card">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <svg class="tesla-t-sm" viewBox="0 0 342 35"><path fill="#E51937" d="M0 .1a38.4 38.4 0 0 1 34.2 0l136.8 68.4L307.8.1A38.4 38.4 0 0 1 342 .1v12L171 80.5 0 12.1V.1z"/></svg>
+          <h3>Deposit Funds (USD $)</h3>
+        </div>
+        <button class="close-btn" onclick="closeDepositModal()">✕</button>
+      </div>
+
+      <div class="order-sheet-body margin-top">
+        <div class="form-group">
+          <label>Select Deposit Method</label>
+          <select id="deposit-method" class="input-dark-lg">
+            <option value="Direct ACH / Bank Wire (US/Global)">Direct ACH / Bank Wire Transfer (Global)</option>
+            <option value="International Card (Stripe)">Credit / Debit Card (Stripe USD Gateway)</option>
+            <option value="Crypto Transfer (USDT/USDC)">USDT / USDC Crypto Gateway (ERC20/TRC20)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Deposit Amount ($ USD)</label>
+          <input type="number" id="deposit-amount-input" class="input-dark-lg" value="1000" min="10">
+        </div>
+        <div class="account-impact-card">
+          <div><small>Current Balance:</small> <strong id="dep-curr-bal">$0.00</strong></div>
+          <div><small>Estimated Balance After:</small> <strong class="txt-pos" id="dep-after-bal">$1,000.00</strong></div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-secondary" onclick="closeDepositModal()">Cancel</button>
+          <button class="btn-success-lg" onclick="processDeposit()">Submit Funding Request ➔</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -69,7 +105,7 @@
     <div class="order-sheet-card">
       <div class="modal-header">
         <div class="modal-title-wrap">
-          <svg class="tesla-t-sm" viewBox="0 0 342 35" fill="#e51937"><path d="M0 .1a38.4 38.4 0 0 1 34.2 0l136.8 68.4L307.8.1A38.4 38.4 0 0 1 342 .1v12L171 80.5 0 12.1V.1z"/></svg>
+          <svg class="tesla-t-sm" viewBox="0 0 342 35"><path fill="#E51937" d="M0 .1a38.4 38.4 0 0 1 34.2 0l136.8 68.4L307.8.1A38.4 38.4 0 0 1 342 .1v12L171 80.5 0 12.1V.1z"/></svg>
           <h3 id="modal-order-title">Review Transaction Order</h3>
         </div>
         <button class="close-btn" onclick="closeOrderModal()">✕</button>
@@ -83,13 +119,13 @@
           <div class="summary-line"><span>Est. Volume / Shares</span><strong id="modal-share-cnt">5.32 TSLA</strong></div>
           <hr class="divider">
           <div class="summary-line"><span>Gross Investment</span><strong id="modal-subtotal">$1,000.00</strong></div>
-          <div class="summary-line"><span>Regulatory & Platform Fee</span><strong class="txt-pos">WAIVED (VIP Account)</strong></div>
+          <div class="summary-line"><span>Platform & Regulatory Fee</span><strong class="txt-pos">WAIVED ($0.00)</strong></div>
           <div class="summary-line total-line"><span>Total Settlement Cost</span><strong id="modal-total-cost" class="txt-pos">$1,000.00</strong></div>
         </div>
 
         <div class="account-impact-card">
-          <div><small>Available Balance Before:</small> <strong id="modal-bal-before">$502,316.78</strong></div>
-          <div><small>Balance After Settlement:</small> <strong id="modal-bal-after" class="txt-blue">$501,316.78</strong></div>
+          <div><small>Available Balance Before:</small> <strong id="modal-bal-before">$0.00</strong></div>
+          <div><small>Balance After Settlement:</small> <strong id="modal-bal-after" class="txt-blue">$0.00</strong></div>
         </div>
 
         <div class="modal-actions">
@@ -100,7 +136,7 @@
     </div>
   </div>
 
-  <!-- ORDER EXECUTION SUCCESS RECEIPT MODAL -->
+  <!-- SUCCESS RECEIPT MODAL -->
   <div id="success-modal" class="modal-overlay hidden">
     <div class="receipt-card">
       <div class="success-badge">✓</div>
@@ -121,14 +157,47 @@
     </div>
   </div>
 
+  <!-- MASTER ADMIN OVERLAY -->
+  <div id="admin-modal" class="modal-overlay hidden">
+    <div class="auth-card" style="max-width: 700px;">
+      <div class="modal-header">
+        <h3>👑 Website Owner Master Admin Panel</h3>
+        <button class="close-btn" onclick="toggleAdminPanel()">✕</button>
+      </div>
+
+      <p class="lbl-muted margin-top">Manage registered user accounts, oversee sister/family balances, and approve pending USD deposits.</p>
+
+      <div class="margin-top-lg">
+        <h4>Registered Users Overview</h4>
+        <table class="table-dark-lg margin-top">
+          <thead>
+            <tr><th>Investor Name</th><th>Email</th><th>Tier</th><th>Cash Bal</th><th>Action</th></tr>
+          </thead>
+          <tbody id="admin-user-table">
+            <!-- Dynamically populated -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="margin-top-lg">
+        <h4>Manual Balance Credit Tool</h4>
+        <div class="form-flex-row margin-top">
+          <input type="text" id="admin-credit-email" class="input-dark" placeholder="User Email (e.g. sister@family.com)">
+          <input type="number" id="admin-credit-amount" class="input-dark" placeholder="Credit Amount ($)">
+          <button class="btn-sm-green" onclick="adminCreditUser()">Credit Balance</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- PERSISTENT APP LAYOUT -->
   <aside class="sidebar">
     <div class="brand">
       <div class="brand-logo">
-        <svg class="tesla-t" viewBox="0 0 342 35" fill="none"><path d="M0 .1a38.4 38.4 0 0 1 34.2 0l136.8 68.4L307.8.1A38.4 38.4 0 0 1 342 .1v12L171 80.5 0 12.1V.1z" fill="#e51937"/></svg>
+        <svg class="tesla-t-logo" viewBox="0 0 342 35"><path fill="#E51937" d="M0 .1a38.4 38.4 0 0 1 34.2 0l136.8 68.4L307.8.1A38.4 38.4 0 0 1 342 .1v12L171 80.5 0 12.1V.1z"/></svg>
         <span>TESLA</span>
       </div>
-      <div class="brand-sub">INVESTMENT PLATFORM</div>
+      <div class="brand-sub">INSTITUTIONAL TERMINAL</div>
     </div>
 
     <nav class="nav-list">
@@ -140,14 +209,15 @@
       <button class="nav-item" onclick="switchView('view-assets')">💎 Assets</button>
       <button class="nav-item" onclick="switchView('view-fund-detail')">🚀 Fund Analytics</button>
       <button class="nav-item" onclick="switchView('view-settings')">⚙️ Settings</button>
+      <button class="nav-item txt-blue" onclick="toggleAdminPanel()">👑 Admin Control</button>
     </nav>
 
     <div class="sidebar-promo">
       <div class="sidebar-promo-content">
-        <p>Invest in a cleaner, smarter, more sustainable future.</p>
+        <p>Invest in clean energy, AI, and next-gen transportation.</p>
         <div class="tesla-footer-brand">
           <div>TESLA</div>
-          <small>INVESTMENT PLATFORM</small>
+          <small>GLOBAL PLATFORM</small>
         </div>
       </div>
     </div>
@@ -162,18 +232,18 @@
       </div>
       <div class="header-right">
         <div class="account-switcher">
-          <small>Active Workspace:</small>
+          <small>Active Profile:</small>
           <select id="user-account-type" onchange="changeAccountMode(this.value)">
-            <option value="Institutional VIP">Institutional VIP ($2.48M)</option>
-            <option value="Personal Account">Personal Account ($25,400.00)</option>
+            <option value="Personal Account">Personal Account ($0.00 USD)</option>
+            <option value="Institutional VIP">Institutional VIP ($0.00 USD)</option>
           </select>
         </div>
-        <span class="status-dot">● Market Open <small>10:24 AM (UTC)</small></span>
+        <span class="status-dot">● Market Open</span>
         <div class="user-profile" onclick="switchView('view-settings')">
           <div class="avatar">👤</div>
           <div>
-            <div class="user-name" id="display-user-name">Institutional Investor</div>
-            <div class="user-tier" id="display-user-tier">VIP Access ▾</div>
+            <div class="user-name" id="display-user-name">Personal Account</div>
+            <div class="user-tier" id="display-user-tier">Individual Access ▾</div>
           </div>
         </div>
         <button class="btn-logout" onclick="logout()">Sign Out</button>
@@ -191,7 +261,7 @@
             <div class="hero-banner-exact">
               <div class="hero-overlay">
                 <h1>Build Wealth Through<br>Tomorrow's Innovation</h1>
-                <p>Invest in Tesla, AI, Clean Energy, and Space — all in one institutional platform.</p>
+                <p>Invest in Tesla, AI, Clean Energy, and Space — pure international USD ecosystem.</p>
                 <button class="btn-hero" onclick="switchView('view-funds')">Explore Investment Funds ➔</button>
               </div>
             </div>
@@ -199,38 +269,38 @@
             <div class="metrics-row gap-12 margin-top">
               <div class="card-dark metric-box">
                 <span class="lbl-muted">Total Portfolio Value</span>
-                <div class="val-hero" id="dash-val-total">$2,487,523.16</div>
-                <div class="txt-pos">▲ +12.48% <span class="lbl-muted">(24h)</span></div>
+                <div class="val-hero" id="dash-val-total">$0.00</div>
+                <div class="txt-pos">▲ +0.00% <span class="lbl-muted">(24h)</span></div>
               </div>
               <div class="card-dark metric-box">
                 <span class="lbl-muted">Total Gain/Loss</span>
-                <div class="val-hero txt-pos" id="dash-val-gain">+$276,982.41</div>
-                <div class="txt-pos">▲ +12.53% <span class="lbl-muted">(All Time)</span></div>
+                <div class="val-hero txt-pos" id="dash-val-gain">+$0.00</div>
+                <div class="txt-pos">▲ +0.00% <span class="lbl-muted">(All Time)</span></div>
               </div>
               <div class="card-dark metric-box relative">
                 <span class="lbl-muted">Available Balance</span>
-                <div class="val-hero" id="dash-val-avail">$502,316.78</div>
-                <button class="btn-deposit-pill" onclick="openDepositModal()">Deposit</button>
+                <div class="val-hero" id="dash-val-avail">$0.00</div>
+                <button class="btn-deposit-pill" onclick="openDepositModal()">+ Deposit USD</button>
               </div>
             </div>
 
             <div class="dash-mid-grid margin-top">
               <div class="card-dark perf-card">
                 <div class="card-header-flex">
-                  <h3>Portfolio Performance</h3>
+                  <h3>Portfolio Growth Performance</h3>
                   <div class="time-pills">
-                    <span>1D</span><span>1W</span><span class="active">1M</span><span>3M</span><span>6M</span><span>1Y</span><span>ALL</span>
+                    <span>1D</span><span>1W</span><span class="active">1M</span><span>1Y</span><span>ALL</span>
                   </div>
                 </div>
                 <div class="chart-summary-header">
-                  <span class="txt-pos font-bold">▲ +12.53%</span>
-                  <div class="val-sub font-bold" id="dash-chart-val">$2,487,523.16</div>
+                  <span class="txt-pos font-bold">▲ +0.00%</span>
+                  <div class="val-sub font-bold" id="dash-chart-val">$0.00</div>
                 </div>
                 <div class="chart-wrapper"><canvas id="dashChartExact"></canvas></div>
               </div>
 
               <div class="card-dark quick-trade-card">
-                <h3>Quick Trade</h3>
+                <h3>Quick Execution</h3>
                 <div class="trade-toggle-bar margin-top">
                   <button class="trade-btn active-buy" id="q-buy-btn" onclick="setQAction('buy')">Buy</button>
                   <button class="trade-btn" id="q-sell-btn" onclick="setQAction('sell')">Sell</button>
@@ -244,69 +314,69 @@
                   </select>
                 </div>
                 <div class="form-field">
-                  <label>Amount ($)</label>
-                  <input type="number" class="input-dark" id="q-amount" value="1000">
+                  <label>Amount ($ USD)</label>
+                  <input type="number" class="input-dark" id="q-amount" value="500">
                 </div>
                 <div class="preset-pills">
+                  <span onclick="setQAmt(100)">$100</span>
+                  <span onclick="setQAmt(500)">$500</span>
                   <span onclick="setQAmt(1000)">$1K</span>
                   <span onclick="setQAmt(5000)">$5K</span>
-                  <span onclick="setQAmt(10000)">$10K</span>
-                  <span onclick="setQAmt(50000)">$50K</span>
                 </div>
                 <button class="btn-submit-trade margin-top" id="q-submit-btn" onclick="initiateQuickTrade()">Buy TSLA</button>
               </div>
             </div>
 
             <div class="card-header-flex margin-top">
-              <h3>Investment Funds</h3>
-              <a href="#" class="link-blue" onclick="switchView('view-funds')">View All ➔</a>
+              <h3>Featured Investment Funds</h3>
+              <a href="#" class="link-blue" onclick="switchView('view-funds')">View All Funds ➔</a>
             </div>
 
             <div class="funds-row-4 margin-top">
               <div class="card-dark fund-box">
                 <div class="fund-img-head tesla-bg-thumb"></div>
                 <div class="fund-title">Tesla Equity Fund</div>
-                <div class="fund-sub">Direct exposure to Tesla's growth</div>
-                <div class="fund-metrics-split"><span class="txt-pos font-bold">+18.24% YTD</span><span class="font-bold">$842,316</span></div>
-                <button class="btn-card-action margin-top" onclick="triggerOrder('Tesla Equity Fund', 'Fund Invest', 842.31, 1000)">Invest Now ➔</button>
+                <div class="fund-sub">Direct vehicle & battery exposure</div>
+                <div class="fund-metrics-split"><span class="txt-pos font-bold">+18.24% YTD</span><span class="font-bold">NAV $842.31</span></div>
+                <button class="btn-card-action margin-top" onclick="triggerOrder('Tesla Equity Fund', 'Fund Invest', 842.31, 500)">Invest Now ➔</button>
               </div>
               <div class="card-dark fund-box">
                 <div class="fund-img-head ai-bg-thumb"></div>
                 <div class="fund-title">AI Innovation Fund</div>
-                <div class="fund-sub">Top AI companies & robotics</div>
-                <div class="fund-metrics-split"><span class="txt-pos font-bold">+14.62% YTD</span><span class="font-bold">$637,428</span></div>
-                <button class="btn-card-action margin-top" onclick="triggerOrder('AI Innovation Fund', 'Fund Invest', 637.42, 1000)">Invest Now ➔</button>
+                <div class="fund-sub">Supercomputing & robotics</div>
+                <div class="fund-metrics-split"><span class="txt-pos font-bold">+14.62% YTD</span><span class="font-bold">NAV $637.42</span></div>
+                <button class="btn-card-action margin-top" onclick="triggerOrder('AI Innovation Fund', 'Fund Invest', 637.42, 500)">Invest Now ➔</button>
               </div>
               <div class="card-dark fund-box">
                 <div class="fund-img-head clean-bg-thumb"></div>
                 <div class="fund-title">Clean Energy Fund</div>
-                <div class="fund-sub">Renewable energy & sustainability</div>
-                <div class="fund-metrics-split"><span class="txt-pos font-bold">+10.37% YTD</span><span class="font-bold">$502,765</span></div>
-                <button class="btn-card-action margin-top" onclick="triggerOrder('Clean Energy Fund', 'Fund Invest', 502.76, 1000)">Invest Now ➔</button>
+                <div class="fund-sub">Renewable grid energy</div>
+                <div class="fund-metrics-split"><span class="txt-pos font-bold">+10.37% YTD</span><span class="font-bold">NAV $502.76</span></div>
+                <button class="btn-card-action margin-top" onclick="triggerOrder('Clean Energy Fund', 'Fund Invest', 502.76, 500)">Invest Now ➔</button>
               </div>
               <div class="card-dark fund-box">
                 <div class="fund-img-head space-bg-thumb"></div>
-                <div class="fund-title">Space Exploration Fund</div>
-                <div class="fund-sub">Space tech & next-gen aerospace</div>
-                <div class="fund-metrics-split"><span class="txt-pos font-bold">+16.80% YTD</span><span class="font-bold">$420,013</span></div>
-                <button class="btn-card-action margin-top" onclick="triggerOrder('Space Exploration Fund', 'Fund Invest', 420.01, 1000)">Invest Now ➔</button>
+                <div class="fund-title">Space Tech Fund</div>
+                <div class="fund-sub">Aerospace & orbital systems</div>
+                <div class="fund-metrics-split"><span class="txt-pos font-bold">+16.80% YTD</span><span class="font-bold">NAV $420.01</span></div>
+                <button class="btn-card-action margin-top" onclick="triggerOrder('Space Tech Fund', 'Fund Invest', 420.01, 500)">Invest Now ➔</button>
               </div>
             </div>
           </div>
 
           <div class="dash-side-col">
             <div class="card-dark">
-              <div class="card-header-flex"><h3>Market Watch</h3></div>
+              <div class="card-header-flex"><h3>Live Watchlist</h3></div>
               <div class="market-list margin-top">
-                <div class="market-item" onclick="triggerOrder('Tesla (TSLA)', 'Market Buy', 187.45, 1000)">
+                <div class="market-item" onclick="triggerOrder('Tesla (TSLA)', 'Market Buy', 187.45, 500)">
                   <div class="symbol-box"><span class="badge-icon b-red">T</span><div><strong>TSLA</strong><br><small>Tesla Inc.</small></div></div>
                   <div class="text-right"><strong>$187.45</strong><br><small class="txt-pos">▲ +4.32%</small></div>
                 </div>
-                <div class="market-item" onclick="triggerOrder('NVIDIA (NVDA)', 'Market Buy', 142.76, 1000)">
+                <div class="market-item" onclick="triggerOrder('NVIDIA (NVDA)', 'Market Buy', 142.76, 500)">
                   <div class="symbol-box"><span class="badge-icon b-green">N</span><div><strong>NVDA</strong><br><small>NVIDIA Corp.</small></div></div>
                   <div class="text-right"><strong>$142.76</strong><br><small class="txt-pos">▲ +3.21%</small></div>
                 </div>
-                <div class="market-item" onclick="triggerOrder('Apple (AAPL)', 'Market Buy', 229.13, 1000)">
+                <div class="market-item" onclick="triggerOrder('Apple (AAPL)', 'Market Buy', 229.13, 500)">
                   <div class="symbol-box"><span class="badge-icon b-gray">A</span><div><strong>AAPL</strong><br><small>Apple Inc.</small></div></div>
                   <div class="text-right"><strong>$229.13</strong><br><small class="txt-pos">▲ +1.87%</small></div>
                 </div>
@@ -314,20 +384,20 @@
             </div>
 
             <div class="card-dark margin-top VIP-card">
-              <div class="vip-header"><strong>👑 Institutional VIP Workspace</strong></div>
-              <p class="lbl-muted margin-top" style="font-size:11px;">Direct institutional access enabled with zero execution latency.</p>
+              <div class="vip-header"><strong>⚡ USD International Gateway</strong></div>
+              <p class="lbl-muted margin-top" style="font-size:11px;">Direct ACH bank wires, Stripe international card payments, and USDT/USDC deposits active.</p>
             </div>
           </div>
         </div>
       </section>
 
       <!-- ====================================
-           2. MARKETS VIEW (#2) - FULL HIGH-RES
+           2. MARKETS VIEW (#2)
            ==================================== -->
       <section id="view-markets" class="page-view">
         <div class="view-header">
           <h2>Market Overview & Intelligence</h2>
-          <p class="lbl-muted">Real-time global asset tracking, index rates, and institutional news.</p>
+          <p class="lbl-muted">Real-time global equity prices and index trends.</p>
         </div>
 
         <div class="metrics-row gap-12 margin-top">
@@ -337,50 +407,31 @@
           <div class="card-dark"><span class="lbl-muted">Tesla Benchmark (TSLA)</span><h3>$187.45 <small class="txt-pos">▲ +4.32%</small></h3></div>
         </div>
 
-        <div class="dash-grid-layout margin-top-lg">
-          <div class="card-dark">
-            <h3>Global Ticker Matrix</h3>
-            <table class="table-dark-lg margin-top">
-              <thead>
-                <tr><th>Symbol</th><th>Name</th><th>Price</th><th>24h Change</th><th>24h Volume</th><th>Market Cap</th><th>Action</th></tr>
-              </thead>
-              <tbody>
-                <tr><td><strong>TSLA</strong></td><td>Tesla Inc.</td><td>$187.45</td><td class="txt-pos">+4.32%</td><td>48.2M</td><td>$595.7B</td><td><button class="btn-sm-green" onclick="triggerOrder('Tesla (TSLA)', 'Market Buy', 187.45, 1000)">Trade</button></td></tr>
-                <tr><td><strong>NVDA</strong></td><td>NVIDIA Corp.</td><td>$142.76</td><td class="txt-pos">+3.21%</td><td>62.1M</td><td>$3.51T</td><td><button class="btn-sm-green" onclick="triggerOrder('NVIDIA (NVDA)', 'Market Buy', 142.76, 1000)">Trade</button></td></tr>
-                <tr><td><strong>AAPL</strong></td><td>Apple Inc.</td><td>$229.13</td><td class="txt-pos">+1.87%</td><td>38.4M</td><td>$3.45T</td><td><button class="btn-sm-green" onclick="triggerOrder('Apple (AAPL)', 'Market Buy', 229.13, 1000)">Trade</button></td></tr>
-                <tr><td><strong>MSFT</strong></td><td>Microsoft Corp.</td><td>$410.32</td><td class="txt-pos">+1.45%</td><td>21.9M</td><td>$3.05T</td><td><button class="btn-sm-green" onclick="triggerOrder('Microsoft (MSFT)', 'Market Buy', 410.32, 1000)">Trade</button></td></tr>
-                <tr><td><strong>AMZN</strong></td><td>Amazon.com Inc.</td><td>$214.06</td><td class="txt-pos">+2.13%</td><td>29.4M</td><td>$2.22T</td><td><button class="btn-sm-green" onclick="triggerOrder('Amazon (AMZN)', 'Market Buy', 214.06, 1000)">Trade</button></td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="card-dark">
-            <h3>Market News & Insights</h3>
-            <div class="news-list margin-top">
-              <div class="news-item">
-                <div class="news-thumb news-1"></div>
-                <div><strong>Tesla Next-Gen Battery Tech</strong><br><small class="lbl-muted">2h ago • Tesla News</small></div>
-              </div>
-              <div class="news-item margin-top">
-                <div class="news-thumb news-2"></div>
-                <div><strong>AI Investments Boost Q3 Yields</strong><br><small class="lbl-muted">4h ago • Market Insights</small></div>
-              </div>
-            </div>
-          </div>
+        <div class="card-dark margin-top-lg">
+          <h3>Global Ticker Matrix</h3>
+          <table class="table-dark-lg margin-top">
+            <thead>
+              <tr><th>Symbol</th><th>Name</th><th>Price</th><th>24h Change</th><th>24h Volume</th><th>Market Cap</th><th>Action</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>TSLA</strong></td><td>Tesla Inc.</td><td>$187.45</td><td class="txt-pos">+4.32%</td><td>48.2M</td><td>$595.7B</td><td><button class="btn-sm-green" onclick="triggerOrder('Tesla (TSLA)', 'Market Buy', 187.45, 500)">Trade</button></td></tr>
+              <tr><td><strong>NVDA</strong></td><td>NVIDIA Corp.</td><td>$142.76</td><td class="txt-pos">+3.21%</td><td>62.1M</td><td>$3.51T</td><td><button class="btn-sm-green" onclick="triggerOrder('NVIDIA (NVDA)', 'Market Buy', 142.76, 500)">Trade</button></td></tr>
+              <tr><td><strong>AAPL</strong></td><td>Apple Inc.</td><td>$229.13</td><td class="txt-pos">+1.87%</td><td>38.4M</td><td>$3.45T</td><td><button class="btn-sm-green" onclick="triggerOrder('Apple (AAPL)', 'Market Buy', 229.13, 500)">Trade</button></td></tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
       <!-- ====================================
-           3. TRADE VIEW (#3) - FULL TERMINAL
+           3. TRADE VIEW (#3)
            ==================================== -->
       <section id="view-trade" class="page-view">
         <div class="view-header">
           <h2>Order Execution Workspace</h2>
-          <p class="lbl-muted">Execute instant market and limit trades directly on institutional order books.</p>
+          <p class="lbl-muted">Execute market and limit trades directly on real-time order books.</p>
         </div>
 
         <div class="trade-workspace-grid margin-top">
-          <!-- Left Column: Order Form -->
           <div class="card-dark">
             <h3>Place Order</h3>
             <div class="trade-toggle-bar margin-top">
@@ -398,23 +449,13 @@
             </div>
 
             <div class="form-group">
-              <label>Order Type</label>
-              <select class="input-dark-lg">
-                <option>Market Order (Instant Settlement)</option>
-                <option>Limit Order</option>
-                <option>Stop-Loss Limit</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>Investment Amount ($)</label>
-              <input type="number" id="t-amount" class="input-dark-lg" value="1000">
+              <label>Investment Amount ($ USD)</label>
+              <input type="number" id="t-amount" class="input-dark-lg" value="500">
             </div>
 
             <button class="btn-success-lg margin-top-lg" id="t-execute-btn" onclick="execTradePageOrder()">Review Order ➔</button>
           </div>
 
-          <!-- Middle Column: Order Book -->
           <div class="card-dark">
             <h3>Live Order Book</h3>
             <table class="table-dark margin-top">
@@ -422,21 +463,16 @@
               <tbody>
                 <tr><td>1,200</td><td class="txt-pos">$187.42</td><td class="txt-neg">$187.50</td><td>1,100</td></tr>
                 <tr><td>2,450</td><td class="txt-pos">$187.40</td><td class="txt-neg">$187.52</td><td>1,850</td></tr>
-                <tr><td>3,120</td><td class="txt-pos">$187.38</td><td class="txt-neg">$187.55</td><td>2,340</td></tr>
-                <tr><td>4,560</td><td class="txt-pos">$187.35</td><td class="txt-neg">$187.60</td><td>3,210</td></tr>
               </tbody>
             </table>
           </div>
 
-          <!-- Right Column: Recent Trades -->
           <div class="card-dark">
             <h3>Recent Executions</h3>
             <table class="table-dark margin-top">
               <thead><tr><th>Time</th><th>Price</th><th>Size</th></tr></thead>
               <tbody>
                 <tr><td>10:24:32</td><td class="txt-pos">$187.45</td><td>100</td></tr>
-                <tr><td>10:24:28</td><td class="txt-pos">$187.42</td><td>50</td></tr>
-                <tr><td>10:24:21</td><td class="txt-neg">$187.38</td><td>200</td></tr>
               </tbody>
             </table>
           </div>
@@ -449,24 +485,22 @@
       <section id="view-portfolio" class="page-view">
         <div class="view-header">
           <h2>Portfolio Holdings & Analytics</h2>
-          <p class="lbl-muted">Comprehensive itemized list of active assets, profit/loss, and activity history.</p>
+          <p class="lbl-muted">Itemized view of your active position holdings and history.</p>
         </div>
 
         <div class="metrics-row gap-12 margin-top">
-          <div class="card-dark"><span class="lbl-muted">Total Value</span><h2 id="port-val">$2,487,523.16</h2></div>
-          <div class="card-dark"><span class="lbl-muted">Total Unrealized Gain</span><h2 class="txt-pos" id="port-gain">+$276,982.41 (+12.53%)</h2></div>
+          <div class="card-dark"><span class="lbl-muted">Total Portfolio Value</span><h2 id="port-val">$0.00</h2></div>
+          <div class="card-dark"><span class="lbl-muted">Total Unrealized Gain</span><h2 class="txt-pos" id="port-gain">+$0.00 (+0.00%)</h2></div>
         </div>
 
         <div class="card-dark margin-top-lg">
-          <h3>Current Holdings</h3>
+          <h3>Active Asset Holdings</h3>
           <table class="table-dark-lg margin-top">
             <thead>
               <tr><th>Asset</th><th>Shares</th><th>Avg Cost</th><th>Current Price</th><th>Market Value</th><th>Unrealized P/L</th><th>Action</th></tr>
             </thead>
-            <tbody>
-              <tr><td><strong>TSLA (Tesla)</strong></td><td>12.5</td><td>$162.34</td><td>$187.45</td><td>$2,343.13</td><td class="txt-pos">+$313.87 (+15.4%)</td><td><button class="btn-sm-red" onclick="triggerOrder('Tesla (TSLA)', 'Market Sell', 187.45, 500)">Sell</button></td></tr>
-              <tr><td><strong>NVDA (NVIDIA)</strong></td><td>8.2</td><td>$128.76</td><td>$142.76</td><td>$1,170.59</td><td class="txt-pos">+$114.80 (+10.9%)</td><td><button class="btn-sm-red" onclick="triggerOrder('NVIDIA (NVDA)', 'Market Sell', 142.76, 500)">Sell</button></td></tr>
-              <tr><td><strong>AAPL (Apple)</strong></td><td>15.0</td><td>$201.12</td><td>$229.13</td><td>$3,436.95</td><td class="txt-pos">+$420.15 (+13.8%)</td><td><button class="btn-sm-red" onclick="triggerOrder('Apple (AAPL)', 'Market Sell', 229.13, 500)">Sell</button></td></tr>
+            <tbody id="portfolio-holdings-body">
+              <tr><td colspan="7" class="lbl-muted text-center" style="text-align:center; padding: 20px;">No open positions yet. Deposit USD and start investing!</td></tr>
             </tbody>
           </table>
         </div>
@@ -478,40 +512,24 @@
       <section id="view-funds" class="page-view">
         <div class="view-header">
           <h2>Tesla Managed Investment Funds</h2>
-          <p class="lbl-muted">Institutional thematic funds engineered for high-growth tech ecosystems.</p>
+          <p class="lbl-muted">Thematic growth funds engineered for technological ecosystems.</p>
         </div>
 
         <div class="funds-grid-2x2 margin-top">
           <div class="card-dark fund-card-lg">
             <div class="fund-img-head tesla-bg-thumb lg-height"></div>
             <h3>Tesla Equity Fund</h3>
-            <p class="lbl-muted margin-top">Direct exposure to Tesla's vehicle and battery ecosystem.</p>
-            <div class="fund-metrics-split margin-top-lg"><h3>+18.24% YTD</h3><h2>$842,316.42</h2></div>
-            <button class="btn-primary-lg margin-top-lg" onclick="triggerOrder('Tesla Equity Fund', 'Fund Invest', 842.31, 1000)">Invest In Fund ➔</button>
+            <p class="lbl-muted margin-top">Direct exposure to Tesla EV production and battery tech.</p>
+            <div class="fund-metrics-split margin-top-lg"><h3>+18.24% YTD</h3><h2>NAV $842.31</h2></div>
+            <button class="btn-primary-lg margin-top-lg" onclick="triggerOrder('Tesla Equity Fund', 'Fund Invest', 842.31, 500)">Invest In Fund ➔</button>
           </div>
 
           <div class="card-dark fund-card-lg">
             <div class="fund-img-head ai-bg-thumb lg-height"></div>
             <h3>AI Innovation Fund</h3>
-            <p class="lbl-muted margin-top">Supercomputers, autonomous intelligence, and robotics.</p>
-            <div class="fund-metrics-split margin-top-lg"><h3>+14.62% YTD</h3><h2>$637,428.17</h2></div>
-            <button class="btn-primary-lg margin-top-lg" onclick="triggerOrder('AI Innovation Fund', 'Fund Invest', 637.42, 1000)">Invest In Fund ➔</button>
-          </div>
-
-          <div class="card-dark fund-card-lg">
-            <div class="fund-img-head clean-bg-thumb lg-height"></div>
-            <h3>Clean Energy Fund</h3>
-            <p class="lbl-muted margin-top">Solar, grid energy storage, and renewable tech.</p>
-            <div class="fund-metrics-split margin-top-lg"><h3>+10.37% YTD</h3><h2>$502,765.03</h2></div>
-            <button class="btn-primary-lg margin-top-lg" onclick="triggerOrder('Clean Energy Fund', 'Fund Invest', 502.76, 1000)">Invest In Fund ➔</button>
-          </div>
-
-          <div class="card-dark fund-card-lg">
-            <div class="fund-img-head space-bg-thumb lg-height"></div>
-            <h3>Space Exploration Fund</h3>
-            <p class="lbl-muted margin-top">Next-generation aerospace, satellite communications, and launch tech.</p>
-            <div class="fund-metrics-split margin-top-lg"><h3>+16.80% YTD</h3><h2>$420,013.54</h2></div>
-            <button class="btn-primary-lg margin-top-lg" onclick="triggerOrder('Space Exploration Fund', 'Fund Invest', 420.01, 1000)">Invest In Fund ➔</button>
+            <p class="lbl-muted margin-top">Autonomous intelligence and robotics ecosystem.</p>
+            <div class="fund-metrics-split margin-top-lg"><h3>+14.62% YTD</h3><h2>NAV $637.42</h2></div>
+            <button class="btn-primary-lg margin-top-lg" onclick="triggerOrder('AI Innovation Fund', 'Fund Invest', 637.42, 500)">Invest In Fund ➔</button>
           </div>
         </div>
       </section>
@@ -522,7 +540,7 @@
       <section id="view-assets" class="page-view">
         <div class="view-header">
           <h2>Asset Allocation Breakdown</h2>
-          <p class="lbl-muted">Distribution analysis across asset classes.</p>
+          <p class="lbl-muted">Distribution graph across equities, funds, and cash reserves.</p>
         </div>
 
         <div class="dash-grid-layout margin-top">
@@ -538,68 +556,62 @@
           <div class="card-dark">
             <h3>Class Breakdown</h3>
             <ul class="alloc-legend margin-top-lg">
-              <li><span>Equities (Tesla, NVDA, AAPL)</span><strong>62.4% ($1,552,214)</strong></li>
-              <li><span>Investment Funds</span><strong>26.8% ($666,656)</strong></li>
-              <li><span>Cash / Liquid Reserves</span><strong>7.1% ($176,614)</strong></li>
-              <li><span>Crypto & Digital Assets</span><strong>3.7% ($92,039)</strong></li>
+              <li><span>Equities (TSLA, NVDA, AAPL)</span><strong>0.0% ($0.00)</strong></li>
+              <li><span>Investment Funds</span><strong>0.0% ($0.00)</strong></li>
+              <li><span>Cash / Liquid USD Balance</span><strong>100.0% ($0.00)</strong></li>
             </ul>
           </div>
         </div>
       </section>
 
       <!-- ====================================
-           7. SETTINGS VIEW (#7) - EXPANDED
+           7. SETTINGS VIEW (#7)
            ==================================== -->
       <section id="view-settings" class="page-view">
         <div class="view-header">
-          <h2>Account Settings & VIP Configurations</h2>
-          <p class="lbl-muted">Manage profile details, security levels, payment methods, and preferences.</p>
+          <h2>Account Settings & VIP Status</h2>
+          <p class="lbl-muted">Manage profile details, security preferences, and deposit options.</p>
         </div>
 
         <div class="dash-grid-layout margin-top">
           <div class="card-dark">
-            <h3>Profile & Account Information</h3>
+            <h3>Profile Information</h3>
             <div class="form-group margin-top">
-              <label>Profile Name</label>
-              <input type="text" class="input-dark-lg" id="set-name" value="Institutional Investor">
+              <label>Full Investor Name</label>
+              <input type="text" class="input-dark-lg" id="set-name" value="Personal Investor">
             </div>
             <div class="form-group">
               <label>Email Address</label>
-              <input type="email" class="input-dark-lg" id="set-email" value="investor@tesla-platform.com">
+              <input type="email" class="input-dark-lg" id="set-email" value="investor@family.com">
             </div>
-            <div class="form-group">
-              <label>Account Tier</label>
-              <input type="text" class="input-dark-lg" value="VIP Institutional Access" disabled>
-            </div>
-            <button class="btn-primary-lg margin-top" onclick="alert('Profile details updated!')">Save Settings</button>
+            <button class="btn-primary-lg margin-top" onclick="alert('Profile details updated successfully!')">Save Profile Settings</button>
           </div>
 
           <div class="card-dark">
-            <h3>Security & Preferences</h3>
-            <div class="summary-line margin-top"><span>Two-Factor Auth (2FA)</span><strong class="txt-pos">Enabled (Hardware Key)</strong></div>
-            <div class="summary-line margin-top"><span>Biometric Passkey</span><strong class="txt-pos">Active</strong></div>
-            <div class="summary-line margin-top"><span>Default Currency</span><strong>USD ($)</strong></div>
-            <div class="summary-line margin-top"><span>Identity KYC Verification</span><strong class="txt-pos">✓ Verified</strong></div>
+            <h3>Security & Payment Options</h3>
+            <div class="summary-line margin-top"><span>Two-Factor Auth (2FA)</span><strong class="txt-pos">Active</strong></div>
+            <div class="summary-line margin-top"><span>Default Base Currency</span><strong>USD ($)</strong></div>
+            <div class="summary-line margin-top"><span>KYC Verification Status</span><strong class="txt-pos">✓ Verified</strong></div>
           </div>
         </div>
       </section>
 
       <!-- ====================================
-           8. FUND DETAIL ANALYTICS VIEW (#8)
+           8. FUND ANALYTICS VIEW (#8)
            ==================================== -->
       <section id="view-fund-detail" class="page-view">
         <div class="view-header">
-          <h2>Tesla Equity Fund — Analytics Deep Dive</h2>
-          <p class="lbl-muted">Direct exposure to Tesla's growth story, from electric vehicles to energy storage and AI robotics.</p>
+          <h2>Tesla Equity Fund — Deep Analytics</h2>
+          <p class="lbl-muted">Direct institutional exposure to EV production and AI innovation.</p>
         </div>
 
         <div class="card-dark margin-top">
           <div class="fund-metrics-split">
             <div>
               <span class="txt-pos font-bold" style="font-size: 20px;">+18.24% YTD</span>
-              <h2>$842,316.42 NAV</h2>
+              <h2>NAV $842.31</h2>
             </div>
-            <button class="btn-success-lg" onclick="triggerOrder('Tesla Equity Fund', 'Fund Invest', 842.31, 1000)">Invest In This Fund ➔</button>
+            <button class="btn-success-lg" onclick="triggerOrder('Tesla Equity Fund', 'Fund Invest', 842.31, 500)">Invest In This Fund ➔</button>
           </div>
           <div class="chart-wrapper margin-top-lg" style="height: 250px;"><canvas id="fundDetailChart"></canvas></div>
         </div>
