@@ -1,82 +1,153 @@
-window.switchView = function(viewId) {
-  const views = document.querySelectorAll('.page-view');
-  views.forEach(view => view.classList.remove('active'));
+:root {
+  --bg-main: #050b14;
+  --bg-card: #0b1523;
+  --bg-sidebar: #03070d;
+  --accent-red: #e51937;
+  --accent-green: #10b981;
+  --accent-blue: #3b82f6;
+  --text-main: #ffffff;
+  --text-muted: #8a99ad;
+  --border-color: #162436;
+}
 
-  const targetView = document.getElementById(viewId);
-  if (targetView) {
-    targetView.classList.add('active');
-  } else {
-    document.getElementById('view-generic').classList.add('active');
-  }
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+body { background-color: var(--bg-main); color: var(--text-main); display: flex; min-height: 100vh; overflow-x: hidden; font-size: 13px; }
 
-  const navItems = document.querySelectorAll('.nav-item');
-  navItems.forEach(item => {
-    item.classList.remove('active');
-    if (item.getAttribute('data-target') === viewId) {
-      item.classList.add('active');
-    }
-  });
+/* Utilities */
+.margin-top { margin-top: 16px; }
+.margin-bottom { margin-bottom: 16px; }
+.positive { color: var(--accent-green) !important; }
+.negative { color: var(--accent-red) !important; }
+.text-muted { color: var(--text-muted); }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.full-width { width: 100%; }
+.cursor-pointer { cursor: pointer; }
 
-  window.scrollTo(0, 0);
-};
+/* Sidebar Layout */
+.sidebar { width: 220px; background: var(--bg-sidebar); border-right: 1px solid var(--border-color); position: fixed; height: 100vh; padding: 20px 14px; display: flex; flex-direction: column; justify-content: space-between; z-index: 100; }
+.brand-logo { font-size: 18px; font-weight: 900; letter-spacing: 4px; }
+.brand-sub { font-size: 8px; color: var(--text-muted); letter-spacing: 1px; }
+.nav-list { display: flex; flex-direction: column; gap: 4px; margin-top: 20px; }
+.nav-item { background: transparent; border: none; text-align: left; padding: 10px 12px; color: var(--text-muted); border-radius: 6px; font-size: 13px; cursor: pointer; transition: 0.2s; width: 100%; }
+.nav-item.active, .nav-item:hover { background: #111e30; color: #fff; }
+.nav-item.active { border-left: 3px solid var(--accent-red); }
+.sidebar-footer { font-size: 11px; color: var(--text-muted); text-align: center; }
+.car-img { width: 100%; border-radius: 8px; margin-bottom: 8px; }
 
-document.addEventListener('DOMContentLoaded', () => {
-  // Sidebar Router Handlers
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', (e) => {
-      const targetId = e.currentTarget.getAttribute('data-target');
-      window.switchView(targetId);
-    });
-  });
+/* Main Wrapper & Header */
+.layout-wrapper { margin-left: 220px; width: calc(100% - 220px); display: flex; flex-direction: column; }
+.global-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; border-bottom: 1px solid var(--border-color); background: var(--bg-main); position: sticky; top: 0; z-index: 90; }
+.search-bar { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; padding: 6px 12px; display: flex; align-items: center; gap: 8px; width: 280px; }
+.search-bar input { background: transparent; border: none; color: #fff; outline: none; width: 100%; font-size: 12px; }
+.header-right { display: flex; align-items: center; gap: 16px; font-size: 12px; }
+.status-dot { color: var(--accent-green); }
+.icon-btn { background: transparent; border: none; color: #fff; cursor: pointer; font-size: 14px; }
+.user-profile { display: flex; align-items: center; gap: 8px; }
+.user-name { font-weight: 600; }
+.user-tier { font-size: 10px; color: var(--accent-blue); }
 
-  // Invest Now to Fund Detail Screen
-  document.querySelectorAll('.fund-invest-btn[data-fund="tesla"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      window.switchView('view-fund-detail');
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    });
-  });
+/* Views & Grids */
+.content-area { padding: 20px 24px; flex: 1; }
+.page-view { display: none; }
+.page-view.active { display: block; animation: fadeIn 0.2s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-  // Chart Helper Function
-  const createLineChart = (canvasId, labels, data, color) => {
-    const canvas = document.getElementById(canvasId);
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const gradient = ctx.createLinearGradient(0, 0, 0, 150);
-    gradient.addColorStop(0, color.replace('1)', '0.35)'));
-    gradient.addColorStop(1, color.replace('1)', '0)'));
+.dashboard-grid { display: grid; grid-template-columns: 1fr 320px; gap: 20px; }
+.split-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
 
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: labels,
-        datasets: [{
-          data: data,
-          borderColor: color,
-          borderWidth: 2,
-          fill: true,
-          backgroundColor: gradient,
-          tension: 0.3,
-          pointRadius: 0
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-          x: { grid: { display: false }, ticks: { color: '#8a99ad', font: { size: 10 } } },
-          y: { grid: { color: '#162436' }, ticks: { color: '#8a99ad', font: { size: 10 } } }
-        }
-      }
-    });
-  };
+/* Cards & Elements */
+.section-card, .metric-card, .banner-card, .info-card { background: var(--bg-card); border: 1px solid var(--border-color); padding: 16px; border-radius: 10px; position: relative; }
+.info-card { background: #0e2038; border-color: var(--accent-blue); padding: 10px 14px; border-radius: 6px; font-size: 12px; }
+.section-header { display: flex; justify-content: space-between; align-items: center; }
+.metric-label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+.metric-value { font-size: 20px; font-weight: 700; }
+.metric-change { font-size: 11px; margin-top: 4px; }
+.btn-sm { position: absolute; right: 12px; top: 12px; background: var(--accent-green); border: none; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; }
 
-  // Render All Interactive Charts
-  const chartLabels = ['Aug 1', 'Aug 7', 'Aug 14', 'Aug 21', 'Aug 28'];
-  createLineChart('dashChart', chartLabels, [1.4, 1.6, 1.5, 1.9, 2.48], 'rgba(16, 185, 129, 1)');
-  createLineChart('tslaMiniChart', chartLabels, [170, 175, 172, 180, 187], 'rgba(16, 185, 129, 1)');
-  createLineChart('tradeChart', chartLabels, [170, 175, 172, 180, 187], 'rgba(16, 185, 129, 1)');
-  createLineChart('portfolioChart', chartLabels, [1.4, 1.6, 1.5, 1.9, 2.48], 'rgba(16, 185, 129, 1)');
-  createLineChart('teslaFundChart', ['Apr', 'May', 'Jun', 'Jul', 'Aug'], [700, 720, 780, 810, 842], 'rgba(16, 185, 129, 1)');
-});
+/* Buttons & Inputs */
+.btn-primary { background: var(--accent-red); color: white; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+.btn-outline { background: transparent; border: 1px solid var(--border-color); color: white; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+.link-btn { color: var(--accent-blue); text-decoration: none; font-size: 12px; }
+.time-pills, .tab-pills-sm { display: flex; gap: 6px; }
+.pill { background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); padding: 4px 10px; border-radius: 14px; font-size: 11px; cursor: pointer; }
+.pill.active { background: #1c2d42; color: #fff; border-color: #1c2d42; }
+
+/* Hero Banner */
+.hero-banner { background: linear-gradient(90deg, rgba(5,11,20,0.95) 40%, rgba(5,11,20,0.3) 100%), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1000') center/cover; padding: 28px; border-radius: 10px; border: 1px solid var(--border-color); }
+.hero-banner h1 { font-size: 22px; margin-bottom: 6px; }
+.hero-banner p { color: var(--text-muted); font-size: 12px; margin-bottom: 14px; }
+
+/* Fund Grids */
+.funds-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 12px; }
+.funds-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.fund-card { background: var(--bg-card); border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; display: flex; flex-direction: column; justify-content: space-between; }
+.fund-title { font-weight: 600; font-size: 13px; }
+.fund-sub { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+.fund-val-wrap { display: flex; justify-content: space-between; margin: 12px 0; font-size: 11px; }
+
+.fund-card-lg { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden; }
+.fund-header-bg { height: 100px; background-size: cover; background-position: center; }
+.tesla-bg { background-image: url('https://images.unsplash.com/photo-1563720223185-11003d516935?w=500'); }
+.ai-bg { background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500'); }
+.clean-bg { background-image: url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=500'); }
+.space-bg { background-image: url('https://images.unsplash.com/photo-1517976487492-5750f3195933?w=500'); }
+.fund-card-body { padding: 16px; }
+.fund-metrics-lg { display: flex; justify-content: space-between; font-size: 14px; }
+
+/* Tables & Lists */
+.data-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.data-table th { text-align: left; color: var(--text-muted); border-bottom: 1px solid var(--border-color); padding: 8px 4px; font-weight: 500; }
+.data-table td { padding: 10px 4px; border-bottom: 1px solid #0d1a2d; }
+.tag-done { color: var(--accent-green); font-size: 11px; }
+
+.stock-item, .news-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-color); }
+.news-item img { width: 40px; height: 40px; border-radius: 4px; object-fit: cover; }
+.badge { display: inline-block; width: 18px; height: 18px; border-radius: 4px; text-align: center; line-height: 18px; font-weight: bold; font-size: 10px; margin-right: 4px; }
+.tsla { background: var(--accent-red); }
+.nvda { background: var(--accent-green); }
+.aapl { background: #555; }
+.msft { background: var(--accent-blue); }
+
+.trade-tabs { display: grid; grid-template-columns: 1fr 1fr; background: #050b14; padding: 2px; border-radius: 6px; }
+.trade-tab { background: transparent; border: none; color: var(--text-muted); padding: 8px; border-radius: 4px; font-weight: 600; cursor: pointer; }
+.trade-tab.active { background: var(--accent-green); color: white; }
+.form-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+.form-group label { font-size: 11px; color: var(--text-muted); }
+.trade-input { background: #050b14; border: 1px solid var(--border-color); color: white; padding: 8px; border-radius: 4px; outline: none; width: 100%; }
+.quick-amounts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
+.amount-pill { background: var(--bg-card); border: 1px solid var(--border-color); color: #fff; padding: 6px; border-radius: 4px; font-size: 11px; cursor: pointer; text-align: center; }
+.amount-pill.active { border-color: var(--accent-green); background: #0e2b20; }
+
+.trade-summary { background: #050b14; border: 1px solid var(--border-color); padding: 12px; border-radius: 6px; display: flex; flex-direction: column; gap: 8px; font-size: 12px; }
+.trade-summary div { display: flex; justify-content: space-between; }
+
+.alloc-list { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 12px; }
+.alloc-list li { display: flex; justify-content: space-between; align-items: center; }
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+.dot.tesla { background: var(--accent-red); }
+.dot.ai { background: var(--accent-blue); }
+.dot.clean { background: var(--accent-green); }
+.dot.space { background: #8b5cf6; }
+.dot.cash { background: #64748b; }
+
+.chart-container { height: 180px; width: 100%; position: relative; }
+.chart-container-sm { height: 100px; width: 100%; position: relative; }
+.fund-detail-hero { display: flex; justify-content: space-between; align-items: center; background: linear-gradient(90deg, #0b1523 0%, #050b14 100%); padding: 24px; border-radius: 10px; border: 1px solid var(--border-color); }
+.btn-lg { padding: 12px 24px; font-size: 14px; }
+
+/* MODAL OVERLAY & FLOW SYSTEM */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(3, 7, 13, 0.85); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1000; }
+.modal-overlay.active { display: flex; animation: fadeIn 0.2s ease-out; }
+.modal-card { background: var(--bg-card); border: 1px solid var(--border-color); width: 100%; max-width: 420px; border-radius: 12px; padding: 24px; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+.modal-close { position: absolute; right: 16px; top: 16px; background: transparent; border: none; color: var(--text-muted); font-size: 16px; cursor: pointer; }
+.flow-step { display: none; }
+.flow-step.active { display: block; }
+
+.stepper { display: flex; gap: 8px; margin-top: 12px; }
+.step-dot { width: 24px; height: 24px; border-radius: 50%; background: #162436; color: var(--text-muted); display: flex; justify-content: center; align-items: center; font-size: 11px; font-weight: bold; }
+.step-dot.active { background: var(--accent-blue); color: #fff; }
+
+.checkbox-row { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-muted); }
+.success-icon { width: 60px; height: 60px; background: rgba(16, 185, 129, 0.15); color: var(--accent-green); border-radius: 50%; font-size: 30px; display: flex; justify-content: center; align-items: center; margin: 0 auto 16px auto; }
