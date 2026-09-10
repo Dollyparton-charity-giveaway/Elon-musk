@@ -82,10 +82,10 @@
             <button class="btn-copy" onclick="copyWalletAddress()">Copy</button>
           </div>
         </div>
-        <p class="lbl-muted margin-top" style="font-size: 11px;">
-          ℹ️ Funds will show as <strong>Pending Verification</strong> until confirmed by Master Admin.
+        <p class="lbl-muted margin-top" style="font-size: 12px; line-height: 1.5;">
+          🔒 Your payment details have been generated. Once your payment is transferred, your account will be credited following network verification.
         </p>
-        <button class="btn-primary-lg margin-top-lg" onclick="submitDeposit()">Notify Admin of Deposit ➔</button>
+        <button class="btn-primary-lg margin-top-lg" onclick="submitDeposit()">I've Made the Payment ➔</button>
       </div>
     </div>
   </div>
@@ -111,7 +111,7 @@
         </div>
         <div class="form-group">
           <label>Destination External Wallet Address</label>
-          <input type="text" id="with-address" class="input-dark-lg" placeholder="Paste your USDT wallet address" required>
+          <input type="text" id="with-address" class="input-dark-lg" placeholder="Paste your wallet address" required>
         </div>
         <button class="btn-primary-lg margin-top-lg" onclick="submitWithdrawal()">Submit Withdrawal Request ➔</button>
       </div>
@@ -150,7 +150,7 @@
           <h4>⏳ Pending Deposit Requests</h4>
           <table class="table-dark margin-top">
             <thead>
-              <tr><th>Investor</th><th>Email</th><th>Amount</th><th>Action</th></tr>
+              <tr><th>Investor</th><th>Email</th><th>Asset</th><th>Amount</th><th>Submitted</th><th>Action</th></tr>
             </thead>
             <tbody id="admin-pending-deposits-body"></tbody>
           </table>
@@ -216,8 +216,8 @@
         <div class="user-profile">
           <div class="avatar">👤</div>
           <div>
-            <div class="user-name" id="display-user-name">Azeez</div>
-            <div class="user-tier" id="display-user-email">investor@x-capital.com</div>
+            <div class="user-name" id="display-user-name">Investor</div>
+            <div class="user-tier" id="display-user-email">user@x-capital.com</div>
           </div>
         </div>
         <button class="btn-logout" onclick="logout()">Sign Out</button>
@@ -260,9 +260,9 @@
             <div class="form-field margin-top">
               <label>Asset Target</label>
               <select class="input-dark" id="q-asset-select">
-                <option value="TSLA">Tesla (TSLA) - $248.12</option>
-                <option value="SpaceX">SpaceX Index - $1,248.75</option>
-                <option value="xAI">xAI Nodes - $12,432.67</option>
+                <option value="TSLA">Tesla (TSLA)</option>
+                <option value="SpaceX">SpaceX Index</option>
+                <option value="xAI">xAI Nodes</option>
               </select>
             </div>
             <div class="form-field margin-top">
@@ -320,6 +320,8 @@
               <option value="TSLA">Tesla (TSLA)</option>
               <option value="SpaceX">SpaceX Orbital Index</option>
               <option value="xAI">xAI Compute Nodes</option>
+              <option value="Neuralink">Neuralink Corp.</option>
+              <option value="Starlink">Starlink Global</option>
             </select>
           </div>
           <div class="form-group">
@@ -339,12 +341,12 @@
           <div class="card-dark fund-card">
             <h3>Tesla Equity Fund</h3>
             <p class="lbl-muted">Direct vehicle & battery exposure</p>
-            <button class="btn-primary margin-top" onclick="investInFund('Tesla Equity Fund', 842.31, 500)">Invest $500 ➔</button>
+            <button class="btn-primary margin-top" onclick="investInFund('Tesla Equity Fund', 'TSLA', 500)">Invest $500 ➔</button>
           </div>
           <div class="card-dark fund-card">
             <h3>AI Innovation Fund</h3>
             <p class="lbl-muted">Supercomputing & robotics</p>
-            <button class="btn-primary margin-top" onclick="investInFund('AI Innovation Fund', 637.42, 500)">Invest $500 ➔</button>
+            <button class="btn-primary margin-top" onclick="investInFund('AI Innovation Fund', 'xAI', 500)">Invest $500 ➔</button>
           </div>
         </div>
       </section>
@@ -355,8 +357,8 @@
           <h2>Crypto Wallet & Transfers</h2>
         </div>
         <div class="margin-top">
-          <button class="btn-primary-lg" onclick="openModal('deposit-modal')">+ Deposit Funds</button>
-          <button class="btn-secondary-lg margin-left" onclick="openModal('withdraw-modal')">- Request Withdrawal</button>
+          <button class="btn-primary-lg" style="width: auto;" onclick="openModal('deposit-modal')">+ Deposit Funds</button>
+          <button class="btn-secondary-lg margin-left" style="width: auto;" onclick="openModal('withdraw-modal')">- Request Withdrawal</button>
         </div>
       </section>
 
@@ -378,11 +380,38 @@
       <!-- 8. SETTINGS VIEW -->
       <section id="view-settings" class="page-view">
         <div class="view-header">
-          <h2>Account Settings</h2>
+          <h2>Account Settings & Security</h2>
+          <p class="lbl-muted">Manage your credentials, preferences, and security profile.</p>
         </div>
-        <div class="card-dark margin-top" style="max-width: 500px;">
-          <h3>Security & Profile</h3>
-          <p class="lbl-muted margin-top">Manage investor profile and settings.</p>
+        <div class="dash-mid-grid margin-top">
+          <div class="card-dark">
+            <h3>👤 Personal Profile</h3>
+            <form onsubmit="updateProfile(event)" class="margin-top">
+              <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="settings-name" class="input-dark-lg" required>
+              </div>
+              <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="settings-email" class="input-dark-lg" readonly style="opacity:0.6;">
+              </div>
+              <button type="submit" class="btn-primary margin-top-lg">Save Profile Changes</button>
+            </form>
+          </div>
+          <div class="card-dark">
+            <h3>🔒 Security & Password</h3>
+            <form onsubmit="updatePassword(event)" class="margin-top">
+              <div class="form-group">
+                <label>Current Password</label>
+                <input type="password" id="settings-old-pass" class="input-dark-lg" required>
+              </div>
+              <div class="form-group">
+                <label>New Password</label>
+                <input type="password" id="settings-new-pass" class="input-dark-lg" required>
+              </div>
+              <button type="submit" class="btn-primary margin-top-lg">Update Password</button>
+            </form>
+          </div>
         </div>
       </section>
 
