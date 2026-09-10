@@ -2,11 +2,10 @@
    CONFIGURABLE MASTER ADMIN & CRYPTO WALLET SETTINGS
    ========================================================================== */
 
-// Master Admin login credentials
 const MASTER_ADMIN_EMAIL = "admin@tesla-terminal.com";
 const MASTER_ADMIN_PASSWORD = "AZEEZOLUWASEYI123"; 
 
-// 👈 PASTE YOUR 1 REAL CRYPTO WALLET ADDRESS HERE BETWEEN THE QUOTES
+// 👈 PASTE YOUR REAL CRYPTO WALLET ADDRESS HERE (Inside the quotes)
 const SINGLE_CRYPTO_WALLET = "bc1qe3yfmcrj58zl6vh9rw39hr7xsvjgv5ywsc5qx0"; 
 
 /* ==========================================================================
@@ -14,9 +13,9 @@ const SINGLE_CRYPTO_WALLET = "bc1qe3yfmcrj58zl6vh9rw39hr7xsvjgv5ywsc5qx0";
    ========================================================================== */
 
 let currentUserEmail = null;
+let pendingOrder = null;
 const pendingDeposits = [];
 
-// Default account with email tesla@family.com and password AZEEZOLUWASEYI123
 const defaultAccounts = {
   'tesla@family.com': {
     name: 'Tesla Investor',
@@ -119,8 +118,22 @@ window.logout = function() {
 };
 
 /* ==========================================================================
-   UI RENDERING
+   NAVIGATION & UI
    ========================================================================== */
+
+window.switchView = function(viewId) {
+  document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
+  const target = document.getElementById(viewId);
+  if (target) target.classList.add('active');
+
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(viewId)) {
+      btn.classList.add('active');
+    }
+  });
+  window.scrollTo(0, 0);
+};
 
 function refreshUI() {
   if (!currentUserEmail || currentUserEmail === 'ADMIN') return;
@@ -132,9 +145,60 @@ function refreshUI() {
   document.getElementById('display-user-tier').innerText = user.tier;
   document.getElementById('dash-val-total').innerText = `$${user.totalVal.toFixed(2)}`;
   document.getElementById('dash-val-avail').innerText = `$${user.availVal.toFixed(2)}`;
+  document.getElementById('port-val').innerText = `$${user.totalVal.toFixed(2)}`;
   
+  if (document.getElementById('set-name')) document.getElementById('set-name').value = user.name;
+  if (document.getElementById('set-email')) document.getElementById('set-email').value = user.email;
+
   document.getElementById('display-wallet-address').innerText = SINGLE_CRYPTO_WALLET;
+
+  renderPortfolioAndHistory(user);
 }
+
+function renderPortfolioAndHistory(user) {
+  const holdingsBody = document.getElementById('portfolio-holdings-body');
+  if (holdingsBody) {
+    if (!user.holdings || user.holdings.length === 0) {
+      holdingsBody.innerHTML = '<tr><td colspan="4" class="lbl-muted text-center" style="text-align:center; padding: 20px;">No open positions yet. Deposit USD to start investing!</td></tr>';
+    } else {
+      holdingsBody.innerHTML = '';
+      user.holdings.forEach(h => {
+        holdingsBody.innerHTML += `
+          <tr>
+            <td><strong>${h.assetName}</strong></td>
+            <td>${h.shares} Units</td>
+            <td>$${parseFloat(h.price).toFixed(2)}</td>
+            <td class="txt-pos">$${parseFloat(h.amount).toFixed(2)}</td>
+          </tr>
+        `;
+      });
+    }
+  }
+
+  const historyBody = document.getElementById('portfolio-history-body');
+  if (historyBody) {
+    if (!user.history || user.history.length === 0) {
+      historyBody.innerHTML = '<tr><td colspan="5" class="lbl-muted text-center" style="text-align:center; padding: 20px;">No recorded transactions.</td></tr>';
+    } else {
+      historyBody.innerHTML = '';
+      user.history.forEach(item => {
+        historyBody.innerHTML += `
+          <tr>
+            <td><small>${item.date}</small></td>
+            <td><strong>${item.type}</strong></td>
+            <td>${item.details}</td>
+            <td class="${item.amount >= 0 ? 'txt-pos' : 'txt-neg'}">$${Math.abs(item.amount).toFixed(2)}</td>
+            <td><span class="txt-pos">✓ ${item.status}</span></td>
+          </tr>
+        `;
+      });
+    }
+  }
+}
+
+/* ==========================================================================
+   DEPOSIT & TRADING FLOWS
+   ========================================================================== */
 
 window.openDepositModal = function() {
   const accs = getAccounts();
@@ -162,8 +226,75 @@ window.submitDepositForReview = function() {
   alert(`💎 Deposit Transfer Notified!\n\nYour deposit of $${amt.toFixed(2)} USDT is submitted for verification.`);
 };
 
+window.triggerOrder = function(assetName, orderType, price, amount) {
+  const accs = getAccounts();
+  const user = accs[currentUserEmail];
+
+  if (user.availVal < amount) {
+    alert(`Insufficient Available Balance ($${user.availVal.toFixed(2)} USD available).\nPlease deposit crypto funds first.`);
+    openDepositModal();
+    return;
+  }
+
+  const shares = (amount / price).toFixed(2);
+  pendingOrder = { assetName, orderType, price, amount, shares, txId: `#TSLA-2026-${Math.floor(10000 + Math.random() * 90000)}` };
+
+  document.getElementById('modal-asset-name').innerText = assetName;
+  document.getElementById('modal-order-type').innerText = orderType;
+  document.getElementById('modal-unit-price').innerText = `$${price.toFixed(2)}`;
+  document.getElementById('modal-share-cnt').innerText = `${shares} Units`;
+  document.getElementById('modal-subtotal').innerText = `$${amount.toFixed(2)}`;
+  document.getElementById('modal-total-cost').innerText = `$${amount.toFixed(2)}`;
+  document.getElementById('modal-bal-before').innerText = `$${user.availVal.toFixed(2)}`;
+  document.getElementById('modal-bal-after').innerText = `$${(user.availVal - amount).toFixed(2)}`;
+
+  document.getElementById('order-modal').classList.remove('hidden');
+};
+
+window.closeOrderModal = function() {
+  document.getElementById('order-modal').classList.add('hidden');
+};
+
+window.executeOrder = function() {
+  const accs = getAccounts();
+  const user = accs[currentUserEmail];
+
+  user.availVal -= pendingOrder.amount;
+  user.holdings.push(pendingOrder);
+  user.history.unshift({
+    date: new Date().toLocaleString(),
+    type: 'Asset Purchase',
+    details: `${pendingOrder.shares} units of ${pendingOrder.assetName}`,
+    amount: -pendingOrder.amount,
+    status: 'Settled'
+  });
+
+  saveAccounts(accs);
+
+  document.getElementById('order-modal').classList.add('hidden');
+  document.getElementById('receipt-txid').innerText = pendingOrder.txId;
+  document.getElementById('receipt-asset').innerText = pendingOrder.assetName;
+  document.getElementById('receipt-amount').innerText = `$${pendingOrder.amount.toFixed(2)}`;
+  document.getElementById('receipt-units').innerText = `${pendingOrder.shares} Units`;
+
+  document.getElementById('success-modal').classList.remove('hidden');
+  refreshUI();
+};
+
+window.finishOrder = function(targetView) {
+  document.getElementById('success-modal').classList.add('hidden');
+  switchView(targetView === 'portfolio' ? 'view-portfolio' : 'view-dashboard');
+};
+
+window.execTradePageOrder = function() {
+  const asset = document.getElementById('t-asset-select').value;
+  const amt = parseFloat(document.getElementById('t-amount').value) || 0;
+  const priceMap = { TSLA: 187.45, NVDA: 142.76, AAPL: 229.13 };
+  triggerOrder(`${asset} Shares`, 'Market Buy', priceMap[asset] || 100, amt);
+};
+
 /* ==========================================================================
-   ADMIN CONTROLS
+   ADMIN PANEL
    ========================================================================== */
 
 window.toggleAdminPanel = function() {
@@ -220,6 +351,13 @@ window.approvePendingDeposit = function(index) {
   if (accs[req.email]) {
     accs[req.email].availVal += req.amount;
     accs[req.email].totalVal += req.amount;
+    accs[req.email].history.unshift({
+      date: new Date().toLocaleString(),
+      type: 'Crypto Deposit',
+      details: 'Confirmed Crypto Wallet Transfer',
+      amount: req.amount,
+      status: 'Completed'
+    });
     saveAccounts(accs);
   }
 
@@ -241,6 +379,13 @@ window.adminCreditUser = function() {
   if (accs[email]) {
     accs[email].availVal += amt;
     accs[email].totalVal += amt;
+    accs[email].history.unshift({
+      date: new Date().toLocaleString(),
+      type: 'Admin Credit',
+      details: 'Direct Account Credit',
+      amount: amt,
+      status: 'Completed'
+    });
     saveAccounts(accs);
     populateAdminTable();
     refreshUI();
@@ -251,5 +396,22 @@ window.adminCreditUser = function() {
 document.addEventListener('keydown', (e) => {
   if (e.ctrlKey && e.shiftKey && e.key === 'A') {
     toggleAdminPanel();
+  }
+});
+
+/* ==========================================================================
+   INITIALIZATION
+   ========================================================================== */
+document.addEventListener('DOMContentLoaded', () => {
+  const ctx = document.getElementById('dashChartExact');
+  if (ctx) {
+    new Chart(ctx.getContext('2d'), {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        datasets: [{ data: [0, 0, 0, 0, 0], borderColor: '#10b981', borderWidth: 2, fill: false }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+    });
   }
 });
